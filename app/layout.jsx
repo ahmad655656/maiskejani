@@ -1,7 +1,10 @@
+import Header from "@/components/Header";
 import "./globals.css";
 import { JetBrains_Mono } from 'next/font/google'
+import PageTransition from "@/components/PageTransition";
+import StairTransition from "@/components/StairTransition";
 const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
+  subsets: ['cyrillic'],
   variable: '--font-jetbrainsMono',
   weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
 })
@@ -16,7 +19,9 @@ export default function RootLayout({ children }) {
       <body
         className={jetbrainsMono.variable}
       >
-        {children}
+        <Header />
+        <StairTransition />
+        <PageTransition>{children}</PageTransition>
       </body>
     </html>
   );

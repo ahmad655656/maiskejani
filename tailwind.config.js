@@ -6,12 +6,26 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    container: {
+      padding: '15px',
+    },
+    screens: {
+      sm: "680px",
+      md: "760px",
+      lg: "960px",
+      xl: "1200px",
+    },
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+      colors: { 
+        primary: "#1c1c22",
+        accent: {
+          Default: "#00ff99",
+          hover: "#00e187",
+        },
       },
-      font
+      fontFamily: {
+        primary: "var(--font-jetbrainsMono)"
+      },
     },
   },
   plugins: [],

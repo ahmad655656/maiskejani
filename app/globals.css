@@ -4,10 +4,45 @@
 
 @layer base{
   body{
-    @apply font-primary
+    @apply text-white font-primary bg-primary;
   }
 }
-/* :root {
+:root{
+  scrollbar-width: none;
+}
+.h1{
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+.h2{
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+.h3{
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+@media (min-width: 1200px) {
+  .h1{
+      font-size: 60px;
+  }
+  .h2{
+    font-size: 48px;
+  }
+  .h3{
+    font-size: 24px;
+  }
+}
+.text-outline{
+  -webkit-text-stroke: 1px #ffffff;
+}
+.text-outline-hover{
+  -webkit-text-stroke: 1px #00ff99;
+}
+/*  :root {
   --background: #ffffff;
   --foreground: #171717;
 }
