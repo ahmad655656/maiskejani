@@ -171,7 +171,7 @@ const Work = () => {
                   <div className="relative flex items-center justify-center h-[460px] group bg-transparent">
                     <div className="absolute top-0 bottom-0 z-10 w-full h-full bg-black/10"></div>
                     <div className="relative w-full h-full">
-                      <Image src={project.image} fill className="object-contain" alt="" />
+                      {item.category !== "full-stack" ? <Image src={project.image} fill className="object-contain" alt="" /> : <video src={project.image}></video>}
                     </div>
                   </div>
                 </SwiperSlide>
