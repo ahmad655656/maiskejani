@@ -62,6 +62,40 @@ const projects = [
     live: "",
     github: "",
   },
+  {
+    num: "04",
+    category: "frontend",
+    title: "project 4",
+    description: "Medical website .",
+    stack: [
+      { name: "Html 5" },
+      { name: "Css 3" },
+      { name: "Javascript" },
+      { name: "Tailwind css" },
+      { name: "React.js" },
+    ],
+    image: "/asset/medical.png",
+    live: "",
+    github: "",
+  },
+   {
+    num: "05",
+    category: "full-stack",
+    title: "project 5",
+    description: "Ecommerce website .",
+    stack: [
+      { name: "Html 5" },
+      { name: "Css 3" },
+      { name: "Javascript" },
+      { name: "Tailwind css" },
+      { name: "React.js" },
+      { name: "Stripe" },
+    ],
+    image: "/asset/fullstack.mp4",
+    live: "",
+    github: "",
+  },
+  
 ];
 const Work = () => {
   const [project, setProject] = useState(projects[0]);
