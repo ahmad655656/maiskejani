@@ -44,7 +44,7 @@ const Services = () => {
                 <BsArrowDownRight className='text-3xl text-primary ' />
                 </Link>
               </div>
-              <h2 className='text-[42px] font-bold leading-none text-white group-hover:text-accent-Default transition-all duration-500 '>{service.title}</h2>
+              <h2 className='text-3xl font-bold leading-none text-white group-hover:text-accent-Default transition-all duration-500 '>{service.title}</h2>
               <p className='text-white/60'>{service.description}</p>
               <div className='w-full border-b border-white/20'></div>
             </div>

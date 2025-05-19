@@ -18,7 +18,7 @@ const projects = [
     num: "01",
     category: "frontend",
     title: "project 1",
-    description: "Cars website .",
+    description: "cars website .",
     stack: [
       { name: "Html 5" },
       { name: "Css 3" },
@@ -27,14 +27,14 @@ const projects = [
       { name: "React.js" },
     ],
     image: "/asset/car.png",
-    live: "",
+    live: "https://ahmad655656.github.io/Fifth-project/",
     github: "",
   },
   {
     num: "02",
     category: "frontend",
     title: "project 2",
-    description: "Games website .",
+    description: "games website .",
     stack: [
       { name: "Html 5" },
       { name: "Css 3" },
@@ -43,14 +43,14 @@ const projects = [
       { name: "React.js" },
     ],
     image: "/asset/game.png",
-    live: "",
+    live: "https://ahmad655656.github.io/gameWebsite/",
     github: "",
   },
   {
     num: "03",
     category: "frontend",
     title: "project 3",
-    description: "Portfolio website .",
+    description: "portfolio website .",
     stack: [
       { name: "Html 5" },
       { name: "Css 3" },
@@ -59,7 +59,7 @@ const projects = [
       { name: "React.js" },
     ],
     image: "/asset/portfolio.png",
-    live: "",
+    live: "https://ahmad655656.github.io/The-fourth-project/",
     github: "",
   },
   {
@@ -95,7 +95,40 @@ const projects = [
     live: "",
     github: "",
   },
-  
+   {
+    num: "06",
+    category: "frontend",
+    title: "project 6",
+    description: "carland website .",
+    stack: [
+      { name: "Html 5" },
+      { name: "Css 3" },
+      { name: "Javascript" },
+      { name: "Tailwind css" },
+      { name: "React.js" },
+      { name: "Next.js" },
+    ],
+    image: "/asset/carland.png",
+    live: "https://car-ashy-nine.vercel.app/",
+    github: "",
+  },
+  {
+    num: "07",
+    category: "frontend",
+    title: "project 7",
+    description: "constructions website .",
+    stack: [
+      { name: "Html 5" },
+      { name: "Css 3" },
+      { name: "Javascript" },
+      { name: "Tailwind css" },
+      { name: "React.js" },
+      { name: "Next.js" },
+    ],
+    image: "/asset/constructions.png",
+    live: "https://urban-build-phi.vercel.app/",
+    github: "",
+  },
 ];
 const Work = () => {
   const [project, setProject] = useState(projects[0]);
@@ -119,11 +152,11 @@ const Work = () => {
               <div className="leading-none text-transparent text-8xl font-extralight text-outline ">
                 {project.num}
               </div>
-              <h2 className="text-[42px] font-bold leading-none text-white group-hover:text-accent-Default transition-all duration-500 capitalize  ">
+              <h2 className="text-3xl font-bold leading-none text-white group-hover:text-accent-Default transition-all duration-500 capitalize  ">
                 {project.category} project
               </h2>
               <p className="text-white/60">{project.description}</p>
-              <ul className="flex gap-4">
+              <ul className="flex gap-5 flex-wrap">
                 {project.stack.map((item, index) => {
                   return (
                     <li key={index} className="text-sm text-accent-Default">
@@ -171,7 +204,7 @@ const Work = () => {
                   <div className="relative flex items-center justify-center h-[460px] group bg-transparent">
                     <div className="absolute top-0 bottom-0 z-10 w-full h-full bg-black/10"></div>
                     <div className="relative w-full h-full">
-                      {item.category !== "full-stack" ? <Image src={project.image} fill className="object-contain" alt="" /> : <video controls muted autoplayed className="absolute h-full z-[22]" src={project.image}></video>}
+                      {item.category !== "full-stack" ? <Image src={project.image} fill className="object-contain" alt="" /> : <video controls muted autoplayed className="absolute h-[80%] z-[22]" src={project.image}></video>}
                     </div>
                   </div>
                 </SwiperSlide>
