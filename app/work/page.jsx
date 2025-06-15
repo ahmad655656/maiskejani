@@ -110,7 +110,7 @@ const projects = [
     ],
     image: "/asset/carland.png",
     live: "https://car-ashy-nine.vercel.app/",
-    github: "",
+    github: "https://github.com/ahmad655656/car.git",
   },
   {
     num: "07",
@@ -127,7 +127,24 @@ const projects = [
     ],
     image: "/asset/constructions.png",
     live: "https://urban-build-phi.vercel.app/",
-    github: "",
+    github: "https://github.com/ahmad655656/urbanBuild.git",
+  },
+  {
+    num: "08",
+    category: "frontend",
+    title: "project 8",
+    description: "Games website .",
+    stack: [
+      { name: "Html 5" },
+      { name: "Css 3" },
+      { name: "Typescript" },
+      { name: "Tailwind css" },
+      { name: "React.js" },
+      { name: "Next.js" },
+    ],
+    image: "/asset/TypeScriptGame.png",
+    live: "https://game-chi-ashen-73.vercel.app/",
+    github: "https://github.com/ahmad655656/game.git",
   },
 ];
 const Work = () => {
