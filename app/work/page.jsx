@@ -28,7 +28,7 @@ const projects = [
     ],
     image: "/asset/car.png",
     live: "https://ahmad655656.github.io/Fifth-project/",
-    github: "",
+    github: "https://github.com/ahmad655656/Fifth-project.git",
   },
   {
     num: "02",
@@ -44,7 +44,7 @@ const projects = [
     ],
     image: "/asset/game.png",
     live: "https://ahmad655656.github.io/gameWebsite/",
-    github: "",
+    github: "https://github.com/ahmad655656/gameWebsite.git",
   },
   {
     num: "03",
@@ -60,7 +60,7 @@ const projects = [
     ],
     image: "/asset/portfolio.png",
     live: "https://ahmad655656.github.io/The-fourth-project/",
-    github: "",
+    github: "https://github.com/ahmad655656/The-fourth-project.git",
   },
   {
     num: "04",
@@ -76,7 +76,7 @@ const projects = [
     ],
     image: "/asset/medical.png",
     live: "",
-    github: "",
+    github: "https://github.com/ahmad655656/medical.git",
   },
    {
     num: "05",
@@ -92,8 +92,8 @@ const projects = [
       { name: "Stripe" },
     ],
     image: "/asset/fullstack.mp4",
-    live: "",
-    github: "",
+    live: "https://photoland-five.vercel.app/",
+    github: "https://github.com/ahmad655656/photoland.git",
   },
    {
     num: "06",
