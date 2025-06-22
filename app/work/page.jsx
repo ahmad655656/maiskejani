@@ -176,7 +176,7 @@ const projects = [
       { name: "React.js" },
       { name: "Next.js" },
     ],
-    image: "/asset/softwareLandingPage.png",
+    image: "/asset/aiImage.png",
     live: "https://ai-image-iota-five.vercel.app/",
     github: "https://github.com/ahmad655656/aiImage.git",
   },
