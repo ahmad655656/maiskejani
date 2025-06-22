@@ -146,6 +146,41 @@ const projects = [
     live: "https://game-chi-ashen-73.vercel.app/",
     github: "https://github.com/ahmad655656/game.git",
   },
+  {
+    num: "09",
+    category: "frontend",
+    title: "project 8",
+    description: "Software Landing Page .",
+    stack: [
+      { name: "Html 5" },
+      { name: "Css 3" },
+      { name: "Typescript" },
+      { name: "Tailwind css" },
+      { name: "React.js" },
+      { name: "Next.js" },
+    ],
+    image: "/asset/softwareLandingPage.png",
+    live: "https://software-landing-page-1n9g.vercel.app/",
+    github: "https://github.com/ahmad655656/softwareLandingPage.git",
+  },
+   {
+    num: "10",
+    category: "frontend",
+    title: "project 8",
+    description: "Ai_Image Generator website .",
+    stack: [
+      { name: "Html 5" },
+      { name: "Css 3" },
+      { name: "Typescript" },
+      { name: "Tailwind css" },
+      { name: "React.js" },
+      { name: "Next.js" },
+    ],
+    image: "/asset/softwareLandingPage.png",
+    live: "https://ai-image-iota-five.vercel.app/",
+    github: "https://github.com/ahmad655656/aiImage.git",
+  },
+  
 ];
 const Work = () => {
   const [project, setProject] = useState(projects[0]);
