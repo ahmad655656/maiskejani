@@ -193,7 +193,7 @@ const projects = [
       { name: "React.js" },
       { name: "Next.js" },
     ],
-    image: "/asset/aiImage.png",
+    image: "/asset/foodie.png",
     live: "https://foodie-mauve-two.vercel.app",
     github: "https://github.com/ahmad655656/foodie.git",
   },
