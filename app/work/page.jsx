@@ -149,7 +149,7 @@ const projects = [
   {
     num: "09",
     category: "frontend",
-    title: "project 8",
+    title: "project 9",
     description: "Software Landing Page .",
     stack: [
       { name: "Html 5" },
@@ -166,7 +166,7 @@ const projects = [
    {
     num: "10",
     category: "frontend",
-    title: "project 8",
+    title: "project 10",
     description: "Ai_Image Generator website .",
     stack: [
       { name: "Html 5" },
@@ -179,6 +179,23 @@ const projects = [
     image: "/asset/aiImage.png",
     live: "https://ai-image-iota-five.vercel.app/",
     github: "https://github.com/ahmad655656/aiImage.git",
+  },
+   {
+    num: "11",
+    category: "frontend",
+    title: "project 11",
+    description: "Foodie Landing Page .",
+    stack: [
+      { name: "Html 5" },
+      { name: "Css 3" },
+      { name: "Typescript" },
+      { name: "Tailwind css" },
+      { name: "React.js" },
+      { name: "Next.js" },
+    ],
+    image: "/asset/aiImage.png",
+    live: "https://foodie-mauve-two.vercel.app",
+    github: "https://github.com/ahmad655656/foodie.git",
   },
   
 ];
