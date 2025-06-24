@@ -23,14 +23,16 @@ export default function Home() {
             </p>
             {/* btn and socials */}
             <div className="flex flex-col items-center gap-8 xl:flex-row">
-              <Button
-                variant="outline"
-                size="lg"
-                className="flex items-center gap-2 uppercase"
-              >
-                <span>Download CV</span>
-                <FiDownload />
-              </Button>
+              <a href="/cv.pdf" download>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="flex items-center text-lg p-5 uppercase"
+                >
+                  Download CV
+                  <FiDownload />
+                </Button>
+              </a>
               <div className="mb-8 xl:mb-0">
                 <Social
                   containerStyles={"flex gap-6"}
@@ -42,7 +44,9 @@ export default function Home() {
             </div>
           </div>
           {/* photo */}
-          <div className="order-1 mb-8 xl:order-none xl:mb-0"><Photo /></div>
+          <div className="order-1 mb-8 xl:order-none xl:mb-0">
+            <Photo />
+          </div>
         </div>
       </div>
       <Stats />

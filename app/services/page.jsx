@@ -5,26 +5,26 @@ const services = [
   {
     num: "01",
     title: "Front-End Devlopment",
-    description: "We are a team of highly skilled web developers who can help you build a website that meets your",
+    description: "I provide you with interactive and easy-to-use user interfaces that enhance visitor experience and increase their engagement.",
     href: "",
   },
   {
     num: "02",
     title: "Correcting Code Errors",
     href: "",
-    description: "We are a team of highly skilled web developers who can help you build a website that meets your",
+    description: "I offer you software debugging services to ensure your applications run smoothly and efficiently.",
   },
   {
     num: "03",
     href: "",
     title: "Logo Design",
-    description: "We are a team of highly skilled web developers who can help you build a website that meets your",
+    description: "I design unique logos that express your brand identity and leave a lasting impression.",
   },
   {
     num: "04",
     href: "",
     title: "Video Design",
-    description: "We are a team of highly skilled web developers who can help you build a website that meets your",
+    description: "I create engaging visual content that reflects your vision and engages your audience in a professional manner.",
   },
 ]
 import { motion } from 'framer-motion'
