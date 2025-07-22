@@ -197,7 +197,25 @@ const projects = [
     live: "https://foodie-mauve-two.vercel.app",
     github: "https://github.com/ahmad655656/foodie.git",
   },
-  
+  {
+    num: "12",
+    category: "fullstack",
+    title: "project 12",
+    description: "CodeSync Website .",
+    stack: [
+      { name: "Html 5" },
+      { name: "Css 3" },
+      { name: "Typescript" },
+      { name: "Tailwind css" },
+      { name: "React.js" },
+      { name: "Next.js" },
+      { name: "clerk" },
+      { name: "convex" },
+    ],
+    image: "/asset/codesync.png",
+    live: "https://condesync.vercel.app/",
+    github: "https://github.com/ahmad655656/condesync.git",
+  },
 ];
 const Work = () => {
   const [project, setProject] = useState(projects[0]);
