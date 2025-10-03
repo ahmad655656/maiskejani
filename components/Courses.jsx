@@ -30,7 +30,7 @@ const Courses = () => {
     };
   
   return (
-    <div className="flex flex-col items-center gap-5 p-20 bg-white">
+    <div className="flex flex-col items-center gap-5 md:p-20 p-10 bg-white">
       <div className="text-center">
         <motion.h1 variants={fadeIn("left", 0.3)}
               initial="hidden"
@@ -52,7 +52,7 @@ const Courses = () => {
               <div className="relative z-10 px-8 pt-6 top-6">
                 <Image width={500}
                 height={500}
-                  className="sm:w-[18rem] sm:h-[18rem] xs:w-[14rem] xs:h-[14rem] w-[8rem] h-[8rem] mx-auto object-cover rounded-full outline outline-[1rem] outline-lightOrange/10 shadow-4xl"
+                  className="sm:w-[18rem] sm:h-[14rem] w-[15rem] h-[15rem] mx-auto object-cover rounded-full outline outline-[1rem] outline-lightOrange/10 shadow-4xl"
                   src={course.image}
                   alt={course.title}
                 />
@@ -64,21 +64,16 @@ const Courses = () => {
                 </h2>
 
                 <div className="flex items-center justify-between w-full pt-2 pb-2">
-                  <div className="flex gap-4">
+                  <div className="flex items-center gap-4">
                     <Image width={500}
                 height={500}
                       className="w-[3.5rem] h-[3.5rem] object-contain rounded-full"
                       src={course.teacherImg}
                       alt={course.teacher}
                     />
-                    <div className="flex flex-col gap-1 font-sans">
                       <h2 className="text-sm font-semibold sm:text-lg text-primaryText">
                         {course.teacher}
                       </h2>
-                      <p className="text-sm text-gray-500 sm:text-base">
-                        {course.role}
-                      </p>
-                    </div>
                   </div>
                   <div>
                     <h3 className="px-2 py-1 text-sm text-white bg-accent-Default sm:text-lg rounded-3xl">

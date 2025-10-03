@@ -7,14 +7,14 @@ const Contact = () => {
   return (
     <>
       {/* source https://tailblocks.cc/ */}
-      <section className="relative p-20 text-gray-600 body-font">
+      <section className="relative md:p-20 p-10 text-gray-600 body-font">
         <motion.h1 variants={fadeIn("left", 0.1)}
               initial="hidden"
               whileInView={"show"}
               viewport={{ once: false, amount: 0.2 }}  className="text-primaryText font-black text-center text-[30px] ">
           Contact
         </motion.h1>
-        <div className="container flex flex-wrap px-5 py-10 mx-auto sm:flex-nowrap">
+        <div className="container flex flex-wrap md:px-5 px-0 md:py-10 py-0 mx-auto sm:flex-nowrap">
           <motion.div variants={fadeIn("right", 0.2)}
               initial="hidden"
               whileInView={"show"}
@@ -27,26 +27,26 @@ const Contact = () => {
               src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6667.462!2d34.781533!3d25.887025!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15217e76b01567ef%3A0xfefb26c1df11c668!2s!5e0!3m2!1sar!2s!4v1722345678901!5m2!1sar!2s"
             />
             <div className="relative flex flex-wrap py-6 rounded shadow-md bg-primary">
-              <div className="px-6 lg:w-1/2">
-                <h2 className="text-xs font-semibold tracking-widest text-primaryText title-font">
+              <div className="md:px-6 px-3 lg:w-1/2">
+                <h2 className="md:text-xs text-[10px] font-semibold tracking-widest text-primaryText title-font">
                   ADDRESS
                 </h2>
-                <p className="mt-1 text-primaryText/70">
+                <p className="mt-1 md:text-[17px] text-[9px] text-primaryText/70">
                   طرطوس - شارع الثورة - مقابل فندق كليوباترا - دخلة صاج الضيافة
                   - جانب روضة الانوار
                 </p>
               </div>
-              <div className="px-6 mt-4 lg:w-1/2 lg:mt-0">
-                <h2 className="text-xs font-semibold tracking-widest text-primaryText title-font">
+              <div className="md:px-6 px-3 mt-4 lg:w-1/2 lg:mt-0">
+                <h2 className="md:text-xs text-[10px] font-semibold tracking-widest text-primaryText title-font">
                   EMAIL
                 </h2>
-                <a className="leading-relaxed text-red-500">
+                <a className="leading-relaxed md:text-[15px] text-[9px] text-red-500">
                   maiskejani2222@gmail.com
                 </a>
-                <h2 className="mt-4 text-xs font-semibold tracking-widest text-primaryText title-font">
+                <h2 className="md:text-xs text-[10px] font-semibold tracking-widest text-primaryText title-font">
                   PHONE
                 </h2>
-                <p className="leading-relaxed text-primaryText/70">
+                <p className="leading-relaxed md:text-[15px] text-[9px] text-primaryText/70">
                   (+963) 937-944-041
                 </p>
               </div>

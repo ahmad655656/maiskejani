@@ -41,7 +41,7 @@ const Articles = () => {
   };
 
   return (
-    <div className="w-full relative bg-white max-h-[100vh] p-20 flex flex-col items-center gap-5">
+    <div className="w-full relative bg-white max-h-[100vh] md:p-20 p-10 flex flex-col items-center gap-5">
       <motion.h1 variants={fadeIn("left", 0.1)}
               initial="hidden"
               whileInView={"show"}
@@ -65,10 +65,10 @@ const Articles = () => {
               initial="hidden"
               whileInView={"show"}
               viewport={{ once: false, amount: 0.2 }}  className="flex flex-col justify-between md:flex-row">
-                <h3 className="mb-2 md:text-xl text-l font-semibold leading-snug text-primaryText">
+                <h3 className="mb-2 md:text-lg text-sm font-semibold leading-snug text-primaryText">
                   {article.title}
                 </h3>
-                <div className="flex items-center mb-2 space-x-2">
+                <div className="flex text-[10px] md:text-[20px] items-center mb-2 space-x-2">
                   {article.tags.map((tag, i) => (
                     <p
                       key={i}
@@ -106,13 +106,13 @@ const Articles = () => {
          {/* Navigation buttons */}
         <button
           onClick={prevSlide}
-          className="absolute px-3 py-2  translate-x-[87px] md:translate-y-[40%] text-primaryText/60 translate-y-[110px] bg-accent-gold transition-all ease-in-out duration-200 hover:text-primaryText rounded left-2 top-1/2 hover:bg-accent-Default/40"
+          className="absolute px-3 py-2 translate-x-[57px]  md:translate-x-[67px] md:translate-y-[40%] text-primaryText/60 translate-y-[110px] bg-accent-gold transition-all ease-in-out duration-200 hover:text-primaryText rounded left-2 top-1/2 hover:bg-accent-Default/40"
         >
           Prev
         </button>
         <button
           onClick={nextSlide}
-          className="absolute px-3 py-2  -translate-x-[95px] md:translate-y-[40%] translate-y-[110px] text-primaryText/60 bg-accent-gold transition-all ease-in-out duration-200 hover:text-primaryText rounded right-2 top-1/2 hover:bg-accent-Default/40"
+          className="absolute px-3 py-2  -translate-x-[57px]   md:-translate-x-[75px] md:translate-y-[40%] translate-y-[110px] text-primaryText/60 bg-accent-gold transition-all ease-in-out duration-200 hover:text-primaryText rounded right-2 top-1/2 hover:bg-accent-Default/40"
         >
           Next
         </button>

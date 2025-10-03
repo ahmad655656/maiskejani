@@ -11,7 +11,7 @@ import { services } from "@/app/data";
 const Services = () => {
   
   return (
-    <div className="p-20">
+    <div className="md:p-20 p-10">
       <div id="features" className="max-w-6xl mx-auto text-center">
         <motion.p variants={fadeIn("left", 0.1)}
               initial="hidden"
@@ -33,7 +33,7 @@ const Services = () => {
               whileInView={"show"}
               viewport={{ once: false, amount: 0.2 }}
                 key={service.id}
-                className="px-6 py-8 flex flex-col items-center bg-white shadow-sm rounded-xl"
+                className="md:px-6 px-2 py-8 flex flex-col items-center bg-white shadow-sm rounded-xl"
               >
                 {service.icon}
                 <h3 className="my-3 font-medium">
