@@ -41,13 +41,13 @@ const Contact = () => {
                   EMAIL
                 </h2>
                 <a className="leading-relaxed text-red-500">
-                  example@email.com
+                  maiskejani2222@gmail.com
                 </a>
                 <h2 className="mt-4 text-xs font-semibold tracking-widest text-primaryText title-font">
                   PHONE
                 </h2>
                 <p className="leading-relaxed text-primaryText/70">
-                  123-456-7890
+                  (+963) 937-944-041
                 </p>
               </div>
             </div>

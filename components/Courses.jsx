@@ -16,6 +16,7 @@ import {
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { courses } from "@/app/data";
+import Image from "next/image";
 const Courses = () => {
    const [selectedCourse, setSelectedCourse] = useState(null);
     const [form, setForm] = useState({ name: "", email: "", phone: "" });
@@ -49,7 +50,8 @@ const Courses = () => {
               className="flex flex-col w-full max-h-full rounded-lg"
             >
               <div className="relative z-10 px-8 pt-6 top-6">
-                <img
+                <Image width={500}
+                height={500}
                   className="sm:w-[18rem] sm:h-[18rem] xs:w-[14rem] xs:h-[14rem] w-[8rem] h-[8rem] mx-auto object-cover rounded-full outline outline-[1rem] outline-lightOrange/10 shadow-4xl"
                   src={course.image}
                   alt={course.title}
@@ -63,7 +65,8 @@ const Courses = () => {
 
                 <div className="flex items-center justify-between w-full pt-2 pb-2">
                   <div className="flex gap-4">
-                    <img
+                    <Image width={500}
+                height={500}
                       className="w-[3.5rem] h-[3.5rem] object-contain rounded-full"
                       src={course.teacherImg}
                       alt={course.teacher}

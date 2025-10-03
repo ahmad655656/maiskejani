@@ -152,10 +152,30 @@ and eco-friendly urban developments.",
   },
 ];
 export const navLinks = [
-  { name: "About Us", href: "/about" },
-  { name: "Services", href: "/services" },
-  { name: "Courses", href: "/courses" },
-  { name: "Contact Us", href: "/contact" },
+   {
+        name: "home",
+        href: "/"
+    },
+    {
+        name: "services",
+        href: "/services"
+    },
+    {
+        name: "resume",
+        href: "/resume"
+    },
+    {
+        name: "courses",
+        href: "/courses"
+    },
+    {
+        name: "contact",
+        href: "/contact"
+    },
+     {
+        name: "articles",
+        href: "/articles"
+    },
 ];
 export const stats = [
   {
@@ -167,7 +187,7 @@ export const stats = [
     text: "Projects Completed",
   },
   {
-    num: 6,
+    num: 10,
     text: "Technologies mastered",
   },
   {

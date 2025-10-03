@@ -1,8 +1,9 @@
 "use client";
 import { courses } from "@/app/data";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import React from "react";
-const page = () => {
+const Page = () => {
   const params = useParams();
   const courseId = parseInt(params.id);
 
@@ -15,7 +16,8 @@ const page = () => {
       {/* قسم تفاصيل الكورس */}
       <section className="flex items-center justify-center bg-black bg-opacity-20 h-[100vh]">
         <div className="flex w-[1300px] p-10 bg-white border-gray-400 rounded-xl border-2">
-          <img
+          <Image width={100}
+                height={100}
             className="w-[556px] ml-3 mr-6"
             src={course.image}
             alt={course.title}
@@ -68,4 +70,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

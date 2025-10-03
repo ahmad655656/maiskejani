@@ -13,7 +13,7 @@ const AboutMe = () => {
               initial="hidden"
               whileInView={"show"}
               viewport={{ once: false, amount: 0.2 }} className="text-primaryText font-black text-center mb-10 text-[30px] ">
-        About Us
+        About<span className="ml-2">Me</span>
       </motion.h1>
       <motion.div  variants={fadeIn("top", 0.3)}
               initial="hidden"
@@ -22,7 +22,7 @@ const AboutMe = () => {
         <Image
           src="/asset/Engineer Mais Kejani.png"
           alt=""
-          className="sm:w-[18rem] sm:h-[18rem] xs:w-[14rem] xs:h-[14rem] w-[8rem] h-[8rem] rounded-[50%] object-contain"
+          className="sm:w-[20rem] sm:h-[20rem] xs:w-[14rem] xs:h-[14rem] w-[15rem] h-[15rem] rounded-[50%] object-contain"
           width={400}
           height={750}
         />

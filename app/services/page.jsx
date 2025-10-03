@@ -18,7 +18,7 @@ const Services = () => {
               initial="hidden"
               whileInView="show"
               viewport={{ once: false, amount: 0.2 }} 
-              className='flex flex-col flex-1 gap-6 p-10 hover:bg-white group'
+              className='flex flex-col flex-1 gap-6 cursor-pointer p-10 hover:bg-white group'
             >
               <div className='flex items-center justify-between w-full'>
                 <div className='text-5xl font-extrabold transition-all duration-500 text-primaryText text-outline group-hover:text-outline-hover'>
@@ -26,7 +26,7 @@ const Services = () => {
                 </div>
                 <Link
                   href={"/#"}
-                  className='w-[70px] h-[70px] group-hover:bg-accent-Default transition-all duration-500 flex items-center justify-center hover:-rotate-45 bg-primaryText rounded-full'
+                  className='w-[70px] h-[70px] group-hover:bg-accent-Default transition-all duration-500 flex items-center justify-center group-hover:-rotate-45 bg-primaryText rounded-full'
                 >
                   <BsArrowDownRight className='text-3xl' />
                 </Link>
