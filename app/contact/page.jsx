@@ -95,10 +95,9 @@ const Contact = () => {
     >
       <div className="container mx-auto">
         <div className="flex flex-col xl:flex-row gap-[30px]">
-          <motion.div variants={fadeIn("right", 0.2)} 
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={{ once: false, amount: 0.2 }} className="xl:h-[54%] order-2 xl:order-none">
+          <motion.div variants={fadeIn("right", 0.2)}
+            initial="show"
+            animate="show"className="xl:h-[54%] order-2 xl:order-none">
             <form
               method="POST"
               className="flex flex-col gap-6 p-10 bg-white rounded-xl"
@@ -183,10 +182,9 @@ const Contact = () => {
               </Button>
             </form>
           </motion.div>
-          <motion.div variants={fadeIn("left", 0.2)} 
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={{ once: false, amount: 0.2 }} className="flex items-center order-1 xl:order-none mb-8 xl:mb-0 xl:justify-end">
+          <motion.div variants={fadeIn("left", 0.2)}
+            initial="show"
+            animate="show" className="flex items-center order-1 xl:order-none mb-8 xl:mb-0 xl:justify-end">
             <ul className="flex flex-col gap-10">
               {info.map((item, index) => {
                 return (

@@ -52,7 +52,7 @@ const Courses = () => {
               <div className="relative z-10 px-8 pt-6 top-6">
                 <Image width={500}
                 height={500}
-                  className="sm:w-[18rem] sm:h-[14rem] w-[15rem] h-[15rem] mx-auto object-cover rounded-full outline outline-[1rem] outline-lightOrange/10 shadow-4xl"
+                  className="sm:w-[18rem] sm:h-[14rem] md:w-[20rem] md:h-[19rem] w-[15rem] h-[15rem] mx-auto object-cover rounded-full outline outline-[1rem] outline-lightOrange/10 shadow-4xl"
                   src={course.image}
                   alt={course.title}
                 />

@@ -14,10 +14,9 @@ const Services = () => {
           {services.map((service, index) => (
             <motion.div
               key={index}
-              variants={fadeIn("left", index * 0.2)} 
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: false, amount: 0.2 }} 
+              variants={fadeIn("left", 0.2)}
+            initial="show"
+            animate="show"
               className='flex flex-col flex-1 gap-6 cursor-pointer p-10 hover:bg-white group'
             >
               <div className='flex items-center justify-between w-full'>

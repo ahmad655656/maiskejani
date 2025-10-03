@@ -15,9 +15,8 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { courses } from "../data";
 import { fadeIn } from "@/variants";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 import Image from "next/image";
-
 
 export default function Page() {
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -34,32 +33,38 @@ export default function Page() {
   return (
     <div className="w-full max-h-full flex flex-col items-center gap-10 pt-10 pb-32 bg-light">
       <div className="flex flex-col justify-center max-w-7xl px-4 py-10 mx-auto sm:px-6">
-        <motion.h1 variants={fadeIn("right", 0.2)} 
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={{ once: false, amount: 0.2 }} className="mb-6 text-2xl font-bold text-accent-Default md:text-3xl dark:text-white">
+        <motion.h1
+          variants={fadeIn("right", 0.2)}
+                      initial="show"
+                      animate="show"
+          className="mb-6 text-2xl md:text-start text-center font-bold text-accent-Default md:text-3xl dark:text-white"
+        >
           Available courses
         </motion.h1>
-        <motion.p variants={fadeIn("right", 0.3)} 
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={{ once: false, amount: 0.2 }} className="px-4 text-start text-gray-500">
+        <motion.p
+          variants={fadeIn("right", 0.3)}
+                      initial="show"
+                      animate="show"
+          className=" text-center md:text-start text-gray-500"
+        >
           The school offers a vibrant kids' class, teaching athletics, language,
           dance, art, drawing, and more, fostering creativity and skills.
         </motion.p>
 
         <div className="xl:w-[100%] w-full mx-auto grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 place-items-center justify-center px-4 pt-6">
           {courses.map((course) => (
-            <motion.div variants={fadeIn("up", course.id * 0.2)} 
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={{ once: false, amount: 0.2 }}
+            <motion.div
+              variants={fadeIn("up", course.id * 0.2)}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
               key={course.id}
-              className="flex flex-col w-full max-h-full rounded-lg"
+              className="flex flex-col max-w-full max-h-full rounded-lg"
             >
               <div className="relative z-10 px-8 pt-6 top-6">
-                <Image width={500}
-                height={500}
+                <Image
+                  width={500}
+                  height={500}
                   className="sm:w-[18rem] sm:h-[18rem] xs:w-[14rem] xs:h-[14rem] w-[8rem] h-[8rem] mx-auto object-cover rounded-full outline outline-[1rem] outline-lightOrange/10 shadow-4xl"
                   src={course.image}
                   alt={course.title}
@@ -72,22 +77,17 @@ export default function Page() {
                 </h2>
 
                 <div className="flex items-center justify-between w-full pt-2 pb-2">
-                  <div className="flex gap-4">
-                    <Image width={500}
-                height={500}
-                      className="w-[3.5rem] h-[3.5rem] object-contain rounded-full"
-                      src={course.teacherImg}
-                      alt={course.teacher}
-                    />
-                    <div className="flex flex-col gap-1 font-sans">
-                      <h2 className="text-sm font-semibold sm:text-lg text-primaryText">
-                        {course.teacher}
-                      </h2>
-                      <p className="text-sm text-gray-500 sm:text-base">
-                        {course.role}
-                      </p>
-                    </div>
-                  </div>
+                   <div className="flex items-center gap-4">
+                                      <Image width={500}
+                                  height={500}
+                                        className="w-[3.5rem] h-[3.5rem] object-contain rounded-full"
+                                        src={course.teacherImg}
+                                        alt={course.teacher}
+                                      />
+                                        <h2 className="text-sm font-semibold sm:text-lg text-primaryText">
+                                          {course.teacher}
+                                        </h2>
+                                    </div>
                   <div>
                     <h3 className="px-2 py-1 text-sm text-white bg-accent-Default sm:text-lg rounded-3xl">
                       {course.price}
@@ -164,63 +164,69 @@ export default function Page() {
         </div>
       </div>
       <div className="flex flex-col justify-center max-w-7xl px-4 py-10 mx-auto sm:px-6">
-        <motion.h1 variants={fadeIn("right", 0.2)} 
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={{ once: false, amount: 0.2 }} className="mb-6 text-2xl font-bold text-accent-Default md:text-3xl dark:text-white">
+        <motion.h1
+          variants={fadeIn("right", 0.2)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mb-6 text-2xl md:text-start text-center font-bold text-accent-Default md:text-3xl dark:text-white"
+        >
           Paid courses
         </motion.h1>
-        <motion.p variants={fadeIn("right", 0.3)} 
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={{ once: false, amount: 0.2 }} className="px-4 text-start text-gray-500">
+        <motion.p
+          variants={fadeIn("right", 0.3)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className=" text-center md:text-start text-gray-500"
+        >
           The school offers a vibrant kids' class, teaching athletics, language,
           dance, art, drawing, and more, fostering creativity and skills.
         </motion.p>
 
         <div className="xl:w-[90%] w-full mx-auto grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 place-items-center justify-center px-4 pt-6">
           {courses.map((course) => (
-            <Link href={`/courses/${course.id}`}
+            <Link
+              href={`/courses/${course.id}`}
               key={course.id}
-              className="flex flex-col hover:bg-white/30 transition-all duration-200 ease-in-out w-full max-h-full rounded-lg"
+              className="flex flex-col hover:bg-white/30 shadow-md transition-all duration-200 ease-in-out w-full max-h-full rounded-lg"
             >
-              <motion.div variants={fadeIn("up", course.id * 0.2)} 
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={{ once: false, amount: 0.2 }}>
+              <motion.div
+                variants={fadeIn("up", course.id * 0.2)}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
+              >
                 <div className="relative z-10 px-8 pt-6 top-6">
-                <Image width={500}
-                height={500}
-                  className="sm:w-[18rem] sm:h-[18rem] xs:w-[14rem] xs:h-[14rem] w-[8rem] h-[8rem] mx-auto object-cover rounded-full outline outline-[1rem] outline-lightOrange/10 shadow-4xl"
-                  src={course.image}
-                  alt={course.title}
-                />
-              </div>
+                  <Image
+                    width={500}
+                    height={500}
+                    className="sm:w-[18rem] sm:h-[18rem] xs:w-[14rem] xs:h-[14rem] w-[8rem] h-[8rem] mx-auto object-cover rounded-full outline outline-[1rem] outline-lightOrange/10 shadow-4xl"
+                    src={course.image}
+                    alt={course.title}
+                  />
+                </div>
 
-              <div className="flex flex-col w-full gap-4 px-6 pb-5 pt-8 rounded-xl bg-lightOrange/10">
-                <h2 className="mt-8 min-h-[60px] text-xl text-center text-primaryText sm:text-xl font-black">
-                  {course.title}
-                </h2>
+                <div className="flex flex-col w-full gap-4 px-6 pb-5 pt-8 rounded-xl bg-lightOrange/10">
+                  <h2 className="mt-8 min-h-[60px] text-xl text-center text-primaryText sm:text-xl font-black">
+                    {course.title}
+                  </h2>
 
-                <div className="flex items-center justify-between w-full pt-2 pb-2">
-                  <div className="flex gap-4">
-                    <Image width={500}
-                height={500}
-                      className="w-[3.5rem] h-[3.5rem] object-contain rounded-full"
-                      src={course.teacherImg}
-                      alt={course.teacher}
-                    />
-                    <div className="flex flex-col gap-1 font-sans">
+                  <div className="flex items-center justify-between w-full pt-2 pb-2">
+                    <div className="flex items-center gap-4">
+                      <Image
+                        width={500}
+                        height={500}
+                        className="w-[3.5rem] h-[3.5rem] object-contain rounded-full"
+                        src={course.teacherImg}
+                        alt={course.teacher}
+                      />
                       <h2 className="text-sm font-semibold sm:text-lg text-primaryText">
                         {course.teacher}
                       </h2>
-                      <p className="text-sm text-gray-500 sm:text-base">
-                        {course.role}
-                      </p>
                     </div>
                   </div>
                 </div>
-              </div>
               </motion.div>
             </Link>
           ))}

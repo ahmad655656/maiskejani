@@ -22,10 +22,9 @@ const Resume = () => {
           defaultValue="experience"
           className="flex flex-col xl:flex-row gap-[60px]  "
         >
-          <motion.div className=" w-full  max-w-[380px]  xl:mx-0 " variants={fadeIn("right", 0.2)} 
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: false, amount: 0.2 }}>
+          <motion.div className=" w-full  max-w-[380px]  xl:mx-0 " variants={fadeIn("right", 0.2)}
+            initial="show"
+            animate="show">
              <TabsList className="flex flex-col gap-6 mx-auto xl:flex-col">
             <TabsTrigger value="experience">Experience</TabsTrigger>
             <TabsTrigger value="education">Education</TabsTrigger>
@@ -34,16 +33,17 @@ const Resume = () => {
           </TabsList>
           </motion.div>
          
-          <motion.div variants={fadeIn("left", 0.2)} 
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: false, amount: 0.2 }} className="min-h-[70vh] w-full ">
+          <motion.div variants={fadeIn("left", 0.3)}
+            initial="show"
+            animate="show" className="min-h-[70vh] w-full ">
             <TabsContent value="experience">
               <div className="flex flex-col gap-[30px] text-center xl:text-left ">
                 <h3 className="text-4xl font-bold text-primaryText">{experience.title}</h3>
                 <p className="max-w-[600px] text-primaryText/60 mx-auto xl:mx-0  ">{experience.description}</p>
                 <ScrollArea className="h-[400px]  ">
-                  <ul className="grid grid-cols-1 lg:grid-col-2 gap-[30px] ">
+                  <motion.ul variants={fadeIn("left", 0.3)}
+            initial="hidden"
+            animate="show" className="grid grid-cols-1 lg:grid-col-2 gap-[30px] ">
                     {experience.items.map((item, index) => {
                       return <li key={index} className="bg-white h-[184px] py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1 ">
                         <span className="text-accent-Default">{item.duration}</span>
@@ -54,7 +54,7 @@ const Resume = () => {
                         </div>
                       </li>
                     })}
-                  </ul>
+                  </motion.ul>
                 </ScrollArea>
               </div>
             </TabsContent>

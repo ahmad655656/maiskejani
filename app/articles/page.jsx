@@ -6,22 +6,20 @@ import { articles } from "../data";
 
 const page = () => {
   return (
-    <div className="h-screen w-full dark:bg-gray-800">
+    <div className="min-h-screen w-full ">
       <section className="flex flex-col justify-center max-w-7xl px-4 py-10 mx-auto sm:px-6">
-        <motion.h2 variants={fadeIn("right", 0.2)} 
-                                    initial="hidden"
-                                    whileInView="show"
-                                    viewport={{ once: false, amount: 0.2 }} className="mb-6 text-2xl font-bold text-accent-Default md:text-3xl dark:text-white">
+        <motion.h2 variants={fadeIn("right", 0.2)}
+  initial="show"
+  animate="show" className="mb-6 text-2xl font-bold text-accent-Default md:text-3xl dark:text-white">
           More Articles
         </motion.h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-1">
           {articles.map((article, index) => {
             return (
-              <motion.div variants={fadeIn("right", index * 0.2)} 
-                                    initial="hidden"
-                                    whileInView="show"
-                                    viewport={{ once: false, amount: 0.2 }}
+              <motion.div variants={fadeIn("right", 0.2)}
+            initial="show"
+            animate="show"
                 key={index}
                 className="p-4 flex flex-col justify-between gap-2 border rounded-lg shadow-md bg-white dark:bg-gray-700 dark:border-gray-400/40"
               >
