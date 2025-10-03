@@ -6,7 +6,7 @@ import React from "react";
 const PageTransition = ({ children }) => {
   const pathname = usePathname();
   return (
-    <AnimatePresence>
+    <AnimatePresence >
       <div key={pathname}>
         <motion.div
           initial={{ opacity: 1 }}

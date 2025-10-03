@@ -34,6 +34,7 @@ const info = [
 ];
 
 import { motion } from "framer-motion";
+import { fadeIn } from "@/variants";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -82,7 +83,6 @@ const Contact = () => {
           service: "",
           message: "",
         });
-       
       })
       .catch((err) => {
         console.error("Failed to send message. Error:", err);
@@ -90,42 +90,43 @@ const Contact = () => {
   };
 
   return (
-    <motion.section
+    <section
       className="py-6"
-      initial={{ opacity: 0 }}
-      animate={{
-        opacity: 1,
-        transition: { delay: 2.4, duration: 0.4, ease: "easeIn" },
-      }}
     >
       <div className="container mx-auto">
         <div className="flex flex-col xl:flex-row gap-[30px]">
-          <div className="xl:h-[54%] order-2 xl:order-none">
+          <motion.div variants={fadeIn("right", 0.2)} 
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={{ once: false, amount: 0.2 }} className="xl:h-[54%] order-2 xl:order-none">
             <form
               method="POST"
-              className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl"
+              className="flex flex-col gap-6 p-10 bg-white rounded-xl"
               onSubmit={handleSubmit}
             >
               <h3 className="text-4xl text-accent-Default">
                 Let's work together
               </h3>
-              <p className="text-white/60">Haedara Hasan Salloum</p>
+              <p className="text-primaryText/60">Haedara Hasan Salloum</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Input
                   name="firstname"
                   type="text"
+                  className="placeholder:text-primaryText"
                   placeholder="Firstname"
                   onChange={handleChange}
                 />
                 <Input
                   name="lastname"
                   type="text"
+                  className="placeholder:text-primaryText"
                   placeholder="Lastname"
                   onChange={handleChange}
                 />
                 <Input
                   name="email"
                   type="email"
+                  className="placeholder:text-primaryText"
                   placeholder="Email address"
                   onChange={handleChange}
                 />
@@ -133,6 +134,7 @@ const Contact = () => {
                   name="phone"
                   type="text"
                   placeholder="Phone number"
+                  className="placeholder:text-primaryText"
                   onChange={handleChange}
                 />
               </div>
@@ -140,27 +142,36 @@ const Contact = () => {
                 onValueChange={(value) =>
                   setFormData({ ...formData, service: value })
                 }
+                className="w-full placeholder:text-primaryText"
               >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select a service" />
+                <SelectTrigger className="w-full placeholder:text-primaryText">
+                  <SelectValue
+                    placeholder="Select a service"
+                    className={`${
+                      formData.service ? "text-primaryText" : "text-primaryText"
+                    }`}
+                  />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectLabel>Select a service</SelectLabel>
-                    <SelectItem value="Front-End Development">
+                    <SelectLabel className="text-primaryText">
+                      Select a service
+                    </SelectLabel>
+                    <SelectItem className="text-primaryText" value="Front-End Development">
                       Front-End Development
                     </SelectItem>
-                    <SelectItem value="Correcting Code Errors">
+                    <SelectItem className="text-primaryText" value="Correcting Code Errors">
                       Correcting Code Errors
                     </SelectItem>
-                    <SelectItem value="Logo Design">Logo Design</SelectItem>
-                    <SelectItem value="Video Design">Video Design</SelectItem>
+                    <SelectItem className="text-primaryText" value="Logo Design">Logo Design</SelectItem>
+                    <SelectItem className="text-primaryText" value="Video Design">Video Design</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
+
               <Textarea
                 name="message"
-                className="h-[200px]"
+                className="h-[200px] placeholder:text-primaryText"
                 placeholder="Type your message here"
                 onChange={handleChange}
               />
@@ -171,27 +182,32 @@ const Contact = () => {
                 Send message
               </Button>
             </form>
-          </div>
-          <div className="flex items-center order-1 xl:order-none mb-8 xl:mb-0 xl:justify-end">
+          </motion.div>
+          <motion.div variants={fadeIn("left", 0.2)} 
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={{ once: false, amount: 0.2 }} className="flex items-center order-1 xl:order-none mb-8 xl:mb-0 xl:justify-end">
             <ul className="flex flex-col gap-10">
               {info.map((item, index) => {
                 return (
                   <li key={index} className="flex items-center gap-6">
-                    <div className="w-[52px] h-[52px] xl:w-[72px] xl:h-[72px] bg-[#27272c] text-accent-Default rounded-md flex items-center justify-center">
+                    <div className="w-[52px] h-[52px] xl:w-[72px] xl:h-[72px] bg-accent-hover text-accent-Default rounded-md flex items-center justify-center">
                       <div className="text-[28px]">{item.icon}</div>
                     </div>
                     <div className="flex-1">
-                      <p className="text-white/60">{item.title}</p>
-                      <h3 className="text-xl">{item.description}</h3>
+                      <p className="text-primaryText">{item.title}</p>
+                      <h3 className="text-xl text-primaryText/60">
+                        {item.description}
+                      </h3>
                     </div>
                   </li>
                 );
               })}
             </ul>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

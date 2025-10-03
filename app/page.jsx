@@ -1,55 +1,89 @@
-import Photo from "@/components/Photo";
-import Social from "@/components/Social";
-import Stats from "@/components/Stats";
-import { Button } from "@/components/ui/button";
-import { FiDownload } from "react-icons/fi";
+'use client'
+import { useEffect, useState } from "react";
+import AboutUs from "@/components/AboutMe";
+import Articles from "@/components/Articles";
+import Contact from "@/components/Contact";
+import Courses from "@/components/Courses";
+import Hero from "@/components/Hero";
+import Services from "@/components/Services";
+import { MdOutlineArchitecture } from "react-icons/md";
+import { TfiRulerAlt2 } from "react-icons/tfi";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa";
+import { motion } from 'framer-motion'
+import { fadeIn } from "@/variants";
+import Footer from "@/components/Footer";
 
 export default function Home() {
+  const [showDown, setShowDown] = useState(false);
+  const [showUp, setShowUp] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const halfPage = document.body.scrollHeight / 4;
+
+      // يظهر سهم النزول لما المستخدم فوق النص التحتاني (قبل منتصف الصفحة)
+      setShowDown(scrollY < halfPage);
+
+      // يظهر سهم الصعود لما المستخدم نازل تحت شوي
+      setShowUp(scrollY > 1100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // تشغيله أول مرة عند التحميل
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToBottom = () => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <section className="h-full">
-      <div className="container h-full mx-auto">
-        <div className="flex flex-col items-center justify-between xl:pt-8 xl:flex-row xl:pb-24">
-          {/* text */}
-          <div className="order-2 text-center xl:text-left xl:order-none">
-            <span className="text-xl">FrontEnd Devloper</span>
-            <h1 className="mb-6 mt-3 h1">
-              Hello I'm <br />
-              <span className="text-accent-Default">Haedara Salloum</span>
-            </h1>
-            <p className="max-w-[500px] mb-9 text-white/80 ">
-              I am a software engineer with a great passion for programming and
-              the web in particular. I have about two years of experience in the
-              field of front-end website design.{" "}
-            </p>
-            {/* btn and socials */}
-            <div className="flex flex-col items-center gap-8 xl:flex-row">
-              <a href="/cv.pdf" download>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="flex items-center text-lg p-5 uppercase"
-                >
-                  Download CV
-                  <FiDownload />
-                </Button>
-              </a>
-              <div className="mb-8 xl:mb-0">
-                <Social
-                  containerStyles={"flex gap-6"}
-                  iconStyles={
-                    "w-9 h-9 border border-accent-Default rounded-full flex justify-center items-center text-accent-Default text-base hover:bg-accent-Default hover:text-primary hover:transition-all duration-500"
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          {/* photo */}
-          <div className="order-1 mb-8 xl:order-none xl:mb-0">
-            <Photo />
-          </div>
-        </div>
-      </div>
-      <Stats />
+    <section className="relative h-full overflow-x-hidden">
+      {/* Hero Section */}
+      <Hero />
+
+      {/* Background Icons */}
+      <MdOutlineArchitecture className="absolute md:w-[400px] md:h-[400px] md:flex z-[60] opacity-10 hidden rotate-[50deg] text-primaryText top-5 right-[-30px]" />
+      <TfiRulerAlt2 className="absolute md:w-[400px] md:h-[400px] w-[200px] h-[200px] opacity-10 z-10 rotate-[80deg] text-primaryText top-8 left-[60px] md:left-[100px]" />
+
+      {/* محتوى الموقع */}
+      <AboutUs />
+      <Services />
+      <Courses />
+      <Contact />
+      <Articles />
+
+      {/* سهم للنزول */}
+      {showDown && (
+        <motion.button variants={fadeIn("top", 0.1)}
+              initial="hidden"
+              whileInView={"show"}
+              viewport={{ once: false, amount: 0.2 }} 
+          onClick={scrollToBottom}
+          className="fixed bottom-5 right-[100px] z-50 bg-primaryText text-white p-3 rounded-full shadow-lg hover:bg-opacity-80 transition"
+        >
+          <FaArrowDown className="w-5 h-5" />
+        </motion.button>
+      )}
+
+      {/* سهم للرجوع للأعلى */}
+      {showUp && (
+        <motion.button variants={fadeIn("bottom", 0.1)}
+              initial="hidden"
+              whileInView={"show"}
+              viewport={{ once: false, amount: 0.2 }} 
+          onClick={scrollToTop}
+          className="fixed bottom-5 right-5 z-50 bg-primaryText text-white p-3 rounded-full shadow-lg hover:bg-opacity-80 transition"
+        >
+          <FaArrowUp className="w-5 h-5" />
+        </motion.button>
+      )}
     </section>
   );
 }

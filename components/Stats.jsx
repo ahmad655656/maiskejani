@@ -1,24 +1,8 @@
 'use client'
+import { stats } from "@/app/data";
 import React from "react";
 import CountUp, { useCountUp } from "react-countup";
-const stats = [
-  {
-    num: 2,
-    text: "Years of Experience",
-  },
-  {
-    num: 10,
-    text: "Projects Completed",
-  },
-  {
-    num: 6,
-    text: "Technologies mastered",
-  },
-  {
-    num: 24,
-    text: "The age",
-  },
-];
+
 const Stats = () => {
   return (
     <section className="pt-4 pb-12 xl:pt-0 xl:pb-0">
@@ -31,9 +15,9 @@ const Stats = () => {
                 end={item.num}
                 duration={5}
                 delay={2}
-                className="text-4xl font-extrabold xl:text-6xl"
+                className="text-4xl font-extrabold text-accent-Default xl:text-6xl"
               />
-              <p className={`${item.text.length < 15 ? "max-w-[100px]" : "max-w-[100px]"} leading-snug text-white/80`}>{item.text}</p>
+              <p className={`${item.text.length < 15 ? "max-w-[100px]" : "max-w-[100px]"} leading-snug text-primaryText/80`}>{item.text}</p>
             </div>
           );
         })}

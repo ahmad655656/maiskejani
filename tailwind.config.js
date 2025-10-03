@@ -17,15 +17,29 @@ module.exports = {
     },
     extend: {
       colors: { 
-        primary: "#1c1c22",
+        primary: "rgb(245 245 245 / var(--tw-bg-opacity, 1))",
+        secondary: "#0B2447",
         accent: {
-          Default: "#00ff99",
-          hover: "#00e187",
+          Default: "rgb(219 195 30)",
+          hover: "#27272c",
         },
+        primaryText: "#27272c"
+      },
+       backgroundImage: {
+        "accent-gold": "linear-gradient(90deg, rgb(180,160,25) 0%, rgb(219,195,30) 0%, white 50%, rgb(219,195,30) 70%, rgb(180,160,25) 100%)"
       },
       fontFamily: {
         primary: "var(--font-jetbrainsMono)"
       },
+       animation: {
+        'spin-3d-complex': 'rotate-3d-cube 10s linear infinite',
+      },
+      keyframes: {
+        'rotate-3d-cube': {
+          '0%': { transform: 'rotateX(0deg) rotateY(0deg)' },
+          '100%': { transform: 'rotateX(360deg) rotateY(360deg)' },
+        }
+      }
     },
   },
   plugins: [],

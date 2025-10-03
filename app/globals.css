@@ -6,7 +6,13 @@
   body{
     @apply text-white font-primary bg-primary;
   }
+input::placeholder,
+textarea::placeholder {
+  color: #27272c;
+  opacity: 1; /* أحيانًا يحتاج لتعطيل الشفافية الافتراضية */
 }
+}
+
 :root{
   scrollbar-width: none;
 }
@@ -42,27 +48,84 @@
 .text-outline-hover{
   -webkit-text-stroke: 1px #00ff99;
 }
-/*  :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer components {
+  .cube-container {
+    perspective: 1000px; /* يوفر العمق للمشهد */
+    width: 300px;        /* عرض المكعب */
+    height: 300px;       /* ارتفاع المكعب */
+    margin: 100px;  /* لتوسيطه */
+  }
+
+  .cube {
+    width: 50%;
+    height: 50%;
+    position: relative;
+    transform-style: preserve-3d; /* يجعل الأوجه جزءًا من مجسم 3D */
+  }
+
+  .face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1); /* أوجه شفافة قليلاً */
+    border: 1px solid rgba(0, 0, 0, 0.2);       /* حدود خفيفة */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: white;
+  }
+
+  /* الوجه الأمامي مع صورة المكعب المعقدة */
+  .face.front {
+    transform: rotateY(0deg) translateZ(200px); /* 200px هو نصف عرض المكعب 400px */
+    background-size: contain; /* لتناسب الصورة داخل الوجه */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #0B2447;
+    opacity: 0.5;
+     /* إزالة اللون الخلفي لكي تظهر الصورة فقط */
+  }
+
+  /* باقي الأوجه يمكن أن تكون شفافة أو بلون خفيف */
+  .face.back {
+    transform: rotateY(180deg) translateZ(200px);
+    background-color: #0B2447; /* أكثر شفافية */
+    opacity: 0.5;
+  }
+  .face.right {
+    transform: rotateY(90deg) translateZ(200px);
+    background-color: #B8860B;
+    opacity: 0.5;
+
+  }
+  .face.left {
+    transform: rotateY(-90deg) translateZ(200px);
+    background-color: #B8860B;
+    opacity: 0.5;
+
+  }
+  .face.top {
+    transform: rotateX(90deg) translateZ(200px);
+    background-color: #0B2447;
+    opacity: 0.5;
+
+  }
+  .face.bottom {
+    transform: rotateX(-90deg) translateZ(200px);
+    background-color: #0B2447;
+    opacity: 0.5;
+
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* الرسوم المتحركة لا تتغير */
+@keyframes rotate-3d-cube {
+  from {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  to {
+    transform: rotateX(360deg) rotateY(360deg);
   }
 }
- */

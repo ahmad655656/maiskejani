@@ -3,6 +3,7 @@ import "./globals.css";
 import { JetBrains_Mono } from 'next/font/google'
 import PageTransition from "@/components/PageTransition";
 import StairTransition from "@/components/StairTransition";
+import Footer from "@/components/Footer";
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['cyrillic'],
   variable: '--font-jetbrainsMono',
@@ -22,6 +23,8 @@ export default function RootLayout({ children }) {
         <Header />
         <StairTransition />
         <PageTransition>{children}</PageTransition>
+      <Footer />
+
       </body>
     </html>
   );

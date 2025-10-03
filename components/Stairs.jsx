@@ -38,7 +38,7 @@ const Stairs = () => {
                         ease: "easeInOut", // نوع التسهيل
                         delay: reverseIndex(index) * 0.1, // تأخير الرسوم المتحركة بناءً على الفهرس المعكوس
                     }} 
-                    className='relative w-full h-full bg-white' // تعيين الفئات CSS للعنصر
+                    className='relative w-full h-full bg-accent-hover opacity-15' // تعيين الفئات CSS للعنصر
                 />
             )
         })}

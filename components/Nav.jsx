@@ -16,12 +16,16 @@ export const link = [
     path: "/resume",
   },
   {
-    name: "work",
-    path: "/work",
+    name: "courses",
+    path: "/courses",
   },
   {
     name: "contact",
     path: "/contact",
+  },
+  {
+    name: "articles",
+    path: "/articles",
   },
 ]
 const Nav = () => {

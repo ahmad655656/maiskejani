@@ -5,7 +5,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center py-[10px] px-[10px] justify-center gap-2 whitespace-nowrap rounded-full text-base font-semibold transition-colors ring-offset-white",
+  "inline-flex items-center py-[10px] px-[10px] justify-center gap-2 whitespace-nowrap rounded-[10px] text-base font-semibold transition-colors ring-offset-white",
   {
     variants: {
       variant: {
