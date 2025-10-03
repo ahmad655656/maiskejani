@@ -5,13 +5,13 @@ import Articles from "@/components/Articles";
 import Contact from "@/components/Contact";
 import Courses from "@/components/Courses";
 import Hero from "@/components/Hero";
-import Services from "@/components/Services";
 import { MdOutlineArchitecture } from "react-icons/md";
 import { TfiRulerAlt2 } from "react-icons/tfi";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { motion } from 'framer-motion'
 import { fadeIn } from "@/variants";
 import Footer from "@/components/Footer";
+import Advertisements from "@/components/Advertisements";
 
 export default function Home() {
   const [showDown, setShowDown] = useState(false);
@@ -54,7 +54,7 @@ export default function Home() {
 
       {/* محتوى الموقع */}
       <AboutUs />
-      <Services />
+      <Advertisements />
       <Courses />
       <Contact />
       <Articles />

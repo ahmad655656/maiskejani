@@ -37,7 +37,7 @@ export default function Page() {
           variants={fadeIn("right", 0.2)}
                       initial="show"
                       animate="show"
-          className="mb-6 text-2xl md:text-start text-center font-bold text-accent-Default md:text-3xl dark:text-white"
+          className="mb-6 text-2xl md:text-start text-center font-bold text-accent-Default md:text-3xl "
         >
           Available courses
         </motion.h1>

@@ -1,94 +1,86 @@
 import Image from "next/image";
 import { FaIdBadge } from "react-icons/fa";
 import { FaGraduationCap } from "react-icons/fa";
-import { FaGithub, FaFacebook, FaWhatsapp, FaTelegram, FaInstagram } from "react-icons/fa";
+import {
+  FaGithub,
+  FaFacebook,
+  FaWhatsapp,
+  FaTelegram,
+  FaInstagram,
+} from "react-icons/fa";
 
-export const services = [
+export const ads = [
   {
-    num: "01",
-    icon: (
-      <Image
-        src="/asset/AutoCad-removebg-preview.png"
-        alt=""
-        width={50}
-        height={50}
+    id: 0,
+    image: (
+      <Image 
+        src="/asset/ad1.jpg"
+        alt="Ad 1"
+        width={400}
+        height={400}
+        className="sm:w-[18rem] sm:h-[14rem] md:w-[28rem] md:h-[19rem] w-[20rem] h-[15rem] mx-auto object-cover shadow-4xl"
       />
     ),
-    title: "AutoCAD",
+    title: "50% Off Architectural Design",
     description:
-      "Preparation of detailed 2D drawings, shop drawings, and precise architectural plans that ensure accuracy and clarity for execution on site.",
+      "Take advantage of our special offer on all architectural design services using the latest software for guaranteed quality and professionalism.",
+    date: new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
   },
   {
-    num: "02",
-    icon: (
+    id: 1,
+    image: (
       <Image
-        src="/asset/Revit-removebg-preview.png"
-        alt=""
-        width={50}
-        height={50}
+        src="/asset/ad2.jpg"
+        alt="Ad 2"
+        width={400}
+        height={400}
+        className="sm:w-[18rem] sm:h-[14rem] md:w-[28rem] md:h-[19rem] w-[15rem] h-[15rem] mx-auto object-cover shadow-4xl"
       />
     ),
-    title: "Revit",
+    date: new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+
+    title: "Luxury Interior Design",
     description:
-      "Building Information Modeling (BIM) services, including 3D modeling, coordination, and comprehensive construction documentation for efficient project delivery.",
+      "Get a unique interior design that reflects your style, with exclusive discounts for a limited time.",
   },
   {
-    num: "03",
-    icon: (
+    id: 1,
+    image: (
       <Image
-        src="/asset/lumion-removebg-preview.png"
-        alt=""
-        width={50}
-        height={50}
+        src="/asset/ad3.jpg"
+        alt="Ad 3"
+        width={400}
+        height={400}
+        className="sm:w-[18rem] sm:h-[14rem] md:w-[28rem] md:h-[19rem] w-[15rem] h-[15rem] mx-auto object-cover shadow-4xl"
       />
     ),
-    title: "Lumion",
+    date: new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+
+    title: "3D Visualization Services",
     description:
-      "High-quality architectural visualizations and realistic renderings with lighting, materials, and animations to bring projects to life.",
+      "Special offers on 3D visualization to bring your projects to life with the best visual quality.",
   },
   {
-    num: "04",
-    icon: (
-      <Image
-        src="/asset/3DMax-removebg-preview.png"
-        alt=""
-        width={50}
-        height={50}
-      />
-    ),
-    title: "3ds Max",
+    id: 4,
+    image: <Image src="/ads/ad4.png" alt="Ad 4" width={200} height={120} />,
+    title: "Exclusive Packages for Companies",
     description:
-      "Advanced 3D modeling and rendering to produce high-quality architectural visualizations and interior designs.",
-  },
-  {
-    num: "05",
-    icon: (
-      <Image
-        src="/asset/vray-removebg-preview (1).png"
-        alt=""
-        width={50}
-        height={50}
-      />
-    ),
-    title: "V-Ray",
-    description:
-      "Photorealistic rendering with professional lighting, materials, and textures for both interior and exterior projects.",
-  },
-  {
-    num: "06",
-    icon: (
-      <Image
-        src="/asset/freedrawing-removebg-preview.png"
-        alt=""
-        width={50}
-        height={50}
-      />
-    ),
-    title: "Free drawing",
-    description:
-      "Creative hand sketches and conceptual drawings to explore design ideas and communicate them clearly.",
+      "Special deals for companies and engineering offices to enhance efficiency and deliver professional designs.",
   },
 ];
+
 export const courses = [
   {
     id: 1,
@@ -152,30 +144,30 @@ and eco-friendly urban developments.",
   },
 ];
 export const navLinks = [
-   {
-        name: "home",
-        href: "/"
-    },
-    {
-        name: "services",
-        href: "/services"
-    },
-    {
-        name: "resume",
-        href: "/resume"
-    },
-    {
-        name: "courses",
-        href: "/courses"
-    },
-    {
-        name: "contact",
-        href: "/contact"
-    },
-     {
-        name: "articles",
-        href: "/articles"
-    },
+  {
+    name: "home",
+    href: "/",
+  },
+  {
+    name: "advertisements",
+    href: "/advertisements",
+  },
+  {
+    name: "resume",
+    href: "/resume",
+  },
+  {
+    name: "courses",
+    href: "/courses",
+  },
+  {
+    name: "contact",
+    href: "/contact",
+  },
+  {
+    name: "articles",
+    href: "/articles",
+  },
 ];
 export const stats = [
   {
@@ -255,7 +247,7 @@ export const experience = {
       position: "Architecture ",
       duration: "2 Year",
     },
-     {
+    {
       company: "Shop Drawing Designer ",
       position: "Architecture ",
       duration: "16 Years",
@@ -286,27 +278,69 @@ export const skills = {
     "AutoCAD (2D & 3D drafting and detailing) Revit (BIM modeling and documentation) 3ds Max with V-Ray (3D visualization and rendering) Photoshop (post-production and presentation) SketchUp (conceptual modeling) Lumion / Enscape (real-time rendering and animations)",
   skilList: [
     {
-      icon: <Image src="/asset/AutoCad-removebg-preview.png" alt="" width={100} height={50} />,
+      icon: (
+        <Image
+          src="/asset/AutoCad-removebg-preview.png"
+          alt=""
+          width={100}
+          height={50}
+        />
+      ),
       name: "AutoCAD",
     },
     {
-      icon: <Image src="/asset/Revit-removebg-preview.png" alt="" width={100} height={50} />,
+      icon: (
+        <Image
+          src="/asset/Revit-removebg-preview.png"
+          alt=""
+          width={100}
+          height={50}
+        />
+      ),
       name: "Revit",
     },
     {
-      icon:  <Image src="/asset/lumion-removebg-preview.png" alt="" width={100} height={50} />,
+      icon: (
+        <Image
+          src="/asset/lumion-removebg-preview.png"
+          alt=""
+          width={100}
+          height={50}
+        />
+      ),
       name: "Lumion",
     },
     {
-      icon: <Image src="/asset/3DMax-removebg-preview.png" alt="" width={100} height={50} />,
+      icon: (
+        <Image
+          src="/asset/3DMax-removebg-preview.png"
+          alt=""
+          width={100}
+          height={50}
+        />
+      ),
       name: "3ds Max",
     },
     {
-      icon: <Image src="/asset/vray-removebg-preview (1).png" alt="" width={100} height={50} />,
+      icon: (
+        <Image
+          src="/asset/vray-removebg-preview (1).png"
+          alt=""
+          width={100}
+          height={50}
+        />
+      ),
       name: "V-Ray",
     },
     {
-      icon: <Image src="/asset/freedrawing-removebg-preview.png" alt="" width={100} height={50} />,
+      icon: (
+        <Image
+          src="/asset/freedrawing-removebg-preview.png"
+          alt=""
+          width={100}
+          height={50}
+        />
+      ),
       name: "Free drawing",
     },
   ],
@@ -335,8 +369,14 @@ export const articles = [
   },
 ];
 export const socials = [
-  { icon: <FaInstagram />, path: "https://www.instagram.com/maiskejani?igsh=NWg1ajE5cTdsMzh2" },
+  {
+    icon: <FaInstagram />,
+    path: "https://www.instagram.com/maiskejani?igsh=NWg1ajE5cTdsMzh2",
+  },
   { icon: <FaWhatsapp />, path: "https://wa.me/+0937944041" },
-  { icon: <FaFacebook />, path: "https://www.facebook.com/mais.kejani?mibextid=ZbWKwL" },
-  { icon: <FaTelegram />, path: "https://t.me/+eLHJf6cNLqRjNTc0" },  
+  {
+    icon: <FaFacebook />,
+    path: "https://www.facebook.com/mais.kejani?mibextid=ZbWKwL",
+  },
+  { icon: <FaTelegram />, path: "https://t.me/+eLHJf6cNLqRjNTc0" },
 ];
