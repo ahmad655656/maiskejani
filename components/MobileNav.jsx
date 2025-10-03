@@ -15,7 +15,7 @@ const MobileNav = () => {
             <CiMenuFries className='text-[32px] text-accent-Default '/>
         </SheetTrigger>
         <SheetContent className="flex flex-col ">
-            <div className='mt-12 mb-20 text-2xl center text-'>
+            <div className=' mt-20 mb-20 text-2xl center text-'>
                 <Link href="/">
                           <Image alt="logo" width={200} height={20} className="max-w-[70%] max-h-[65px] mx-auto " src="/asset/Primary_logo.png" />
                 

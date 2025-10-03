@@ -10,7 +10,7 @@ const page = () => {
       <section className="flex flex-col justify-center max-w-7xl px-4 py-10 mx-auto sm:px-6">
         <motion.h2 variants={fadeIn("right", 0.2)}
   initial="show"
-  animate="show" className="mb-6 text-2xl font-bold text-accent-Default md:text-3xl dark:text-white">
+  animate="show" className="mb-6 text-2xl font-bold text-accent-Default md:text-3xl">
           More Articles
         </motion.h2>
 
