@@ -1,64 +1,104 @@
-'use client'
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { fadeIn } from "@/variants";
-import { motion } from "framer-motion"
-import { articles } from "../data";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-const page = () => {
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+const Page = () => {
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchArticles() {
+      try {
+        const res = await fetch(
+          "https://test.course.start-tech.ae/api/articles?per_page=10&page=1",
+          {
+            headers: {
+              Accept: "application/json",
+            },
+          }
+        );
+
+        const json = await res.json();
+        // Laravel غالباً بيرجع { data: { data: [...] } }
+        setArticles(Array.isArray(json.data?.data) ? json.data.data : []);
+        console.log(json.data?.data);
+      } catch (err) {
+        console.error("Error fetching articles:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchArticles();
+  }, []);
+
+  if (loading) return <p className="text-center py-10">Loading articles...</p>;
+
   return (
-    <div className="min-h-screen w-full ">
+    <div className="min-h-screen w-full">
       <section className="flex flex-col justify-center max-w-7xl px-4 py-10 mx-auto sm:px-6">
-        <motion.h2 variants={fadeIn("right", 0.2)}
-  initial="show"
-  animate="show" className="mb-6 text-2xl font-bold text-accent-Default md:text-3xl">
+        <motion.h2
+          variants={fadeIn("right", 0.2)}
+          initial="show"
+          animate="show"
+          className="mb-6 text-2xl font-bold text-accent-Default md:text-3xl"
+        >
           More Articles
         </motion.h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-1">
-          {articles.map((article, index) => {
-            return (
-              <motion.div variants={fadeIn("right", 0.2)}
-            initial="show"
-            animate="show"
-                key={index}
-                className="p-4 flex flex-col justify-between gap-2 border rounded-lg shadow-md bg-white dark:bg-gray-700 dark:border-gray-400/40"
-              >
-                <p className="text-xl font-semibold text-primaryText two-lines dark:text-blue-100">
-                  {article.title}
-                </p>
-
-                <div className="flex flex-wrap gap-2 text-xs text-gray-600 dark:text-gray-300">
-                  <span className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-600">
-                    {article.tags[0]}
-                  </span>
-                  <span className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-600">
-                    {article.tags[1]}
-                  </span>
-                  <span className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-600">
-                    {article.tags[2]}
-                  </span>
-                </div>
-
-                <p className="text-gray-800 two-lines dark:text-gray-300">
-                  {article.description}
-                </p>
-
-                <div className="flex items-center justify-between text-sm">
-                  <button className="text-gray-500 dark:text-gray-300">
-                    {article.date.toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </button>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+        <Swiper
+          modules={[Navigation]}
+          navigation
+          spaceBetween={20}
+          slidesPerView={1}
+          breakpoints={{
+            640: { slidesPerView: 1 },
+            768: { slidesPerView: 1 },
+            1024: { slidesPerView: 1 },
+          }}
+          className="w-[90vw] mx-auto "
+        >
+          {articles.map((article, index) => (
+            <SwiperSlide key={article.id || index}>
+              <Link href={`/articles/${article.id}`}>
+                <motion.div
+                  variants={fadeIn("right", 0.2)}
+                  initial="show"
+                  animate="show"
+                  className="cursor-pointer flex flex-col justify-between h-[500px] border rounded-lg shadow-md bg-white"
+                >
+                  <div className="w-full h-[300px]">
+                    <Image
+                      src={article.thumbnail}
+                      alt={article.title}
+                      width={400}
+                      height={300}
+                      className="object-cover h-full w-full rounded-t-lg"
+                    />
+                  </div>
+                  <div className="flex flex-col px-4 py-3 h-[40%]">
+                    <p className="md:text-xl text-xl font-semibold text-primaryText">
+                      {article.title}
+                    </p>
+                    <p className="text-primaryText/70 line-clamp-3">
+                      {article.content}
+                    </p>
+                  </div>
+                </motion.div>
+              </Link>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </section>
     </div>
   );
 };
 
-export default page;
+export default Page;

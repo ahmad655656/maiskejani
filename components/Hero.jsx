@@ -31,9 +31,9 @@ const Hero = () => {
               opacity: 1,
               transition: { delay: 0.1, duration: 0.4, ease: "easeIn" },
             }}
-            className="text-xl"
+            className="text-lg"
           >
-            Architectural trainer{" "}
+            Architectural trainer
           </motion.span>
 
           <motion.h1

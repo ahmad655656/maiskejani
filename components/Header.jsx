@@ -1,24 +1,49 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "./Nav";
 import { Button } from "./ui/button";
 import MobileNav from "./MobileNav";
 import Image from "next/image";
-import { IoMdNotifications } from "react-icons/io";
-
-// استورد الكومبوننت الخاص بالـ Dropdown
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger, 
-  DropdownMenuPortal, 
-} from "@/components/ui/dropdown-menu";
+import Cookie from "cookie-universal";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const cookies = Cookie();
+    const token = cookies.get("student");
+    setIsLoggedIn(!!token);
+  }, [pathname]);
+
+  const handleLogout = async () => {
+    const cookies = Cookie();
+    const token = cookies.get("student");
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/logout`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // 👈 تمرير التوكن
+        },
+      });
+
+      if (!res.ok) {
+        console.error("Logout failed", await res.json());
+      }
+    } catch (err) {
+      console.error("Network error during logout", err);
+    } finally {
+      cookies.remove("student");
+      setIsLoggedIn(false);
+      window.location.href = "/login"; // 👈 يرجعه لصفحة تسجيل الدخول
+    }
+  };
+
   return (
     <header className="py-2 text-primaryText sticky top-0 bg-neutral-100 shadow-sm shadow-primaryText/20 z-[100]">
       <div className="container flex items-center justify-between mx-auto">
@@ -36,45 +61,22 @@ const Header = () => {
         {/* desktop nav */}
         <div className="items-center hidden gap-8 xl:flex">
           <Nav />
-          <Link href="/login">
-            <Button className="bg-accent-gold text-primaryText/70">LogIn</Button>
-          </Link>
 
-          {/* زر الإشعارات */}
-       <DropdownMenu>
-  <DropdownMenuTrigger asChild>
-    <button className="relative border-none outline-none">
-      <IoMdNotifications className="text-[30px] w-[30px] text-primaryText cursor-pointer" />
-      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-        3
-      </span>
-    </button>
-  </DropdownMenuTrigger>
-
-  {/* هنا نستخدم Portal + position=popper */}
-  <DropdownMenuPortal>
-    <DropdownMenuContent
-      align="end"
-      sideOffset={8}
-      position="popper"
-      className="w-64 p-6 bg-white shadow-lg rounded-lg"
-    >
-      <DropdownMenuLabel className="text-primaryText">
-        Notifications
-      </DropdownMenuLabel>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem className="text-primaryText">
-        You got a new message
-      </DropdownMenuItem>
-      <DropdownMenuItem className="text-primaryText">
-        Upcoming event tomorrow
-      </DropdownMenuItem>
-      <DropdownMenuItem className="text-primaryText">
-        Your course is approved
-      </DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenuPortal>
-</DropdownMenu>
+          {/* زر login/logout */}
+          {!isLoggedIn ? (
+            <Link href="/login">
+              <Button className="bg-accent-gold text-primaryText/70">
+                LogIn
+              </Button>
+            </Link>
+          ) : (
+            <Button
+              onClick={handleLogout}
+              className="bg-red-500 text-white hover:bg-red-600"
+            >
+              Logout
+            </Button>
+          )}
         </div>
 
         {/* mobile nav */}

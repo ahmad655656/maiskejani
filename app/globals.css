@@ -11,8 +11,25 @@ textarea::placeholder {
   color: #27272c;
   opacity: 1; /* أحيانًا يحتاج لتعطيل الشفافية الافتراضية */
 }
+html, body {
+  font-size: 16px !important;
+}
+}
+.swiper-button-next,
+.swiper-button-prev {
+  color: #27272c !important; /* غير اللون اللي بدك ياه (ذهبي مثلا) */
+  background: rgb(219 195 30); 
+  border-radius: 50%; /* يخلي الزر دائري */
+  width: 60px !important;
+  padding: 10px;
+  height: 60px !important;
 }
 
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 17px !important; /* حجم السهم */
+  font-weight: bold;
+}
 :root{
   scrollbar-width: none;
 }
@@ -47,77 +64,6 @@ textarea::placeholder {
 }
 .text-outline-hover{
   -webkit-text-stroke: 1px #00ff99;
-}
-
-@layer components {
-  .cube-container {
-    perspective: 1000px; /* يوفر العمق للمشهد */
-    width: 300px;        /* عرض المكعب */
-    height: 300px;       /* ارتفاع المكعب */
-    margin: 100px;  /* لتوسيطه */
-  }
-
-  .cube {
-    width: 50%;
-    height: 50%;
-    position: relative;
-    transform-style: preserve-3d; /* يجعل الأوجه جزءًا من مجسم 3D */
-  }
-
-  .face {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.1); /* أوجه شفافة قليلاً */
-    border: 1px solid rgba(0, 0, 0, 0.2);       /* حدود خفيفة */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-    color: white;
-  }
-
-  /* الوجه الأمامي مع صورة المكعب المعقدة */
-  .face.front {
-    transform: rotateY(0deg) translateZ(200px); /* 200px هو نصف عرض المكعب 400px */
-    background-size: contain; /* لتناسب الصورة داخل الوجه */
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: #0B2447;
-    opacity: 0.5;
-     /* إزالة اللون الخلفي لكي تظهر الصورة فقط */
-  }
-
-  /* باقي الأوجه يمكن أن تكون شفافة أو بلون خفيف */
-  .face.back {
-    transform: rotateY(180deg) translateZ(200px);
-    background-color: #0B2447; /* أكثر شفافية */
-    opacity: 0.5;
-  }
-  .face.right {
-    transform: rotateY(90deg) translateZ(200px);
-    background-color: #B8860B;
-    opacity: 0.5;
-
-  }
-  .face.left {
-    transform: rotateY(-90deg) translateZ(200px);
-    background-color: #B8860B;
-    opacity: 0.5;
-
-  }
-  .face.top {
-    transform: rotateX(90deg) translateZ(200px);
-    background-color: #0B2447;
-    opacity: 0.5;
-
-  }
-  .face.bottom {
-    transform: rotateX(-90deg) translateZ(200px);
-    background-color: #0B2447;
-    opacity: 0.5;
-
-  }
 }
 
 /* الرسوم المتحركة لا تتغير */

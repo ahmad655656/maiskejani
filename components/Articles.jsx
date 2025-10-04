@@ -1,32 +1,41 @@
 "use client"
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion'
 import { fadeIn } from '@/variants';
 
-const articles = [
-  {
-    title: "Use TailwindCSS with Gatsby (with Emotion or styled-components)",
-    tags: ["#gatsby", "#tailwindcss", "#css"],
-    description:
-      "Learn how to use TailwindCSS with Gatsby along with Emotion or styled-components perfectly.",
-  },
-  {
-    title: "Understanding React Hooks Deeply",
-    tags: ["#react", "#hooks", "#javascript"],
-    description:
-      "A detailed guide on React hooks and how to use them efficiently in your projects.",
-  },
-  {
-    title: "Building Responsive UI with TailwindCSS",
-    tags: ["#tailwindcss", "#css", "#responsive"],
-    description:
-      "Learn to build fully responsive user interfaces using TailwindCSS classes.",
-  },
-];
-
 const Articles = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchArticles() {
+      try {
+        const res = await fetch(
+          "https://test.course.start-tech.ae/api/articles?per_page=10&page=1",
+          {
+            headers: {
+              Accept: "application/json",
+            },
+          }
+        );
+
+        const json = await res.json();
+        // Laravel غالباً بيرجع { data: { data: [...] } }
+        setArticles(Array.isArray(json.data?.data) ? json.data.data : []);
+        console.log(json.data?.data);
+      } catch (err) {
+        console.error("Error fetching articles:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchArticles();
+  }, []);
+
+  if (loading) return <p className="text-center py-10">Loading articles...</p>;
 
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev === 0 ? articles.length - 1 : prev - 1));
@@ -64,29 +73,15 @@ const Articles = () => {
               <motion.div  variants={fadeIn("right", 0.2)}
               initial="hidden"
               whileInView={"show"}
-              viewport={{ once: false, amount: 0.2 }}  className="flex flex-col justify-between md:flex-row">
-                <h3 className="mb-2 md:text-lg text-sm font-semibold leading-snug text-primaryText">
+              viewport={{ once: false, amount: 0.2 }}  className="flex flex-col items-center">
+                <h3 className="mb-2 md:text-xl text-center text-sm font-semibold leading-snug text-primaryText">
                   {article.title}
                 </h3>
-                <div className="flex text-[10px] md:text-[20px] items-center mb-2 space-x-2">
-                  {article.tags.map((tag, i) => (
-                    <p
-                      key={i}
-                      className={`px-2 rounded ${
-                        tag.startsWith("#tailwindcss")
-                          ? "text-gray-800 bg-accent-hover/30"
-                          : "text-white bg-accent-Default/30"
-                      }`}
-                    >
-                      {tag}
-                    </p>
-                  ))}
-                </div>
-              </motion.div>
               <motion.p  variants={fadeIn("right", 0.3)}
               initial="hidden"
               whileInView={"show"}
-              viewport={{ once: false, amount: 0.2 }}  className="text-primaryText/30 line-clamp-4 md:block hidden">{article.description}</motion.p>
+              viewport={{ once: false, amount: 0.2 }}  className="text-primaryText/30 line-clamp-2 ">{article.content}</motion.p>
+              </motion.div>
             </Link>
           ))}
         </div>

@@ -1,27 +1,63 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import Link from "next/link";
 import { CiMenuFries } from "react-icons/ci";
 import Image from "next/image";
 import { navLinks } from "@/app/data";
+import Cookie from "cookie-universal";
+import { Button } from "./ui/button";
 
 const MobileNav = () => {
-  const pathname = usePathname();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const pathname = usePathname();
+  
+    useEffect(() => {
+      const cookies = Cookie();
+      const token = cookies.get("student");
+      setIsLoggedIn(!!token);
+    }, [pathname]);
+  
+    const handleLogout = async () => {
+      const cookies = Cookie();
+      const token = cookies.get("student");
+  
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/logout`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // 👈 تمرير التوكن
+          },
+        });
+  
+        if (!res.ok) {
+          console.error("Logout failed", await res.json());
+        }
+      } catch (err) {
+        console.error("Network error during logout", err);
+      } finally {
+        cookies.remove("student");
+        setIsLoggedIn(false);
+        window.location.href = "/login"; // 👈 يرجعه لصفحة تسجيل الدخول
+      }
+    };
+  
   return (
     <Sheet>
       <SheetTrigger className="flex items-center justify-center">
         <CiMenuFries className="text-[32px] text-accent-Default " />
       </SheetTrigger>
-      <SheetContent className="flex flex-col ">
-        <div className=" mt-20 mb-20 text-2xl center text-">
+      <SheetContent className="flex flex-col items-center ">
+        <div className=" mt-20 mb-10 text-2xl center text-">
           <Link href="/">
             <Image
               alt="logo"
               width={200}
               height={20}
-              className="max-w-[70%] max-h-[65px] mx-auto "
+              className="max-w-[70%] max-h-[75px] mx-auto "
               src="/asset/Primary_logo.png"
             />
           </Link>
@@ -42,6 +78,21 @@ const MobileNav = () => {
             );
           })}
         </nav>
+         {/* زر login/logout */}
+          {!isLoggedIn ? (
+            <Link href="/login">
+              <Button className="bg-accent-gold text-primaryText/70">
+                LogIn
+              </Button>
+            </Link>
+          ) : (
+            <Button
+              onClick={handleLogout}
+              className="bg-red-500 max-w-[200px] text-white hover:bg-red-600"
+            >
+              Logout
+            </Button>
+          )}
       </SheetContent>
     </Sheet>
   );

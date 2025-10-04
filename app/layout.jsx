@@ -1,13 +1,14 @@
 import Header from "@/components/Header";
 import "./globals.css";
-import { JetBrains_Mono } from 'next/font/google'
+import { Inter  } from 'next/font/google'
 import PageTransition from "@/components/PageTransition";
 import StairTransition from "@/components/StairTransition";
 import Footer from "@/components/Footer";
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['cyrillic'],
-  variable: '--font-jetbrainsMono',
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
+const inter  = Inter ({
+  subsets: ['latin'],
+  variable: '--font-inter ',
+    weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
+
 })
 export const metadata = {
   title: "Create Next App",
@@ -18,7 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={jetbrainsMono.variable}
+        className={inter.variable}
       >
         <Header />
         <StairTransition />

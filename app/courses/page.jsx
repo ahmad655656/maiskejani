@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,43 +12,91 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { courses } from "../data";
 import { fadeIn } from "@/variants";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Page() {
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // 🆕 form states
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    async function fetchCourses() {
+      try {
+        const res = await fetch(
+          "https://test.course.start-tech.ae/api/courses?per_page=6&page=1",
+          {
+            headers: {
+              Accept: "application/json",
+            },
+          }
+        );
+        const json = await res.json();
+        console.log(json.data?.data)
+        // Laravel عادة بيرجع data داخل data
+        setCourses(Array.isArray(json.data?.data) ? json.data.data : []);
+        console.log(courses)
+      } catch (err) {
+        console.error("Fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchCourses();
+  }, []);
+
+  // 🆕 handle submit
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log("Course:", selectedCourse);
-    console.log("Form Data:", form);
+    if (!selectedCourse) return;
 
-    alert("تم إرسال الطلب للمسؤول ✅");
-  };
+    setSubmitting(true);
+    try {
+      const res = await fetch("https://test.course.start-tech.ae/api/enroll", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          course_id: selectedCourse.id,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to send request");
+
+      const data = await res.json();
+      alert("Enrollment request sent successfully ✅");
+      console.log("Response:", data);
+
+      // reset form
+      setForm({ name: "", email: "", phone: "" });
+      setSelectedCourse(null);
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong ❌");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="w-full max-h-full flex flex-col items-center gap-10 pt-10 pb-32 bg-light">
       <div className="flex flex-col justify-center max-w-7xl px-4 py-10 mx-auto sm:px-6">
-        <motion.h1
-          variants={fadeIn("right", 0.2)}
-                      initial="show"
-                      animate="show"
-          className="mb-6 text-2xl md:text-start text-center font-bold text-accent-Default md:text-3xl "
-        >
+        <h1 className="mb-6 text-2xl md:text-start text-center font-bold text-accent-Default md:text-3xl">
           Available courses
-        </motion.h1>
-        <motion.p
-          variants={fadeIn("right", 0.3)}
-                      initial="show"
-                      animate="show"
-          className=" text-center md:text-start text-gray-500"
-        >
-          The school offers a vibrant kids' class, teaching athletics, language,
-          dance, art, drawing, and more, fostering creativity and skills.
-        </motion.p>
+        </h1>
 
         <div className="xl:w-[100%] w-full mx-auto grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 place-items-center justify-center px-4 pt-6">
           {courses.map((course) => (
@@ -66,37 +113,22 @@ export default function Page() {
                   width={500}
                   height={500}
                   className="sm:w-[18rem] sm:h-[18rem] xs:w-[14rem] xs:h-[14rem] w-[8rem] h-[8rem] mx-auto object-cover rounded-full outline outline-[1rem] outline-lightOrange/10 shadow-4xl"
-                  src={course.image}
+                  src={course.thumbnail}
                   alt={course.title}
                 />
               </div>
 
-              <div className="flex flex-col w-full gap-4 px-6 pt-10 rounded-xl bg-lightOrange/10">
-                <h2 className="mt-8 min-h-[60px] text-xl text-center text-primaryText sm:text-xl font-black">
+              <div className="flex items-center justify-between w-full gap-4 px-6 pt-10 rounded-xl bg-lightOrange/10">
+                <h2 className="mt-8 min-h-[60px] text-sm text-center text-primaryText sm:text-sm font-black">
                   {course.title}
                 </h2>
 
-                <div className="flex items-center justify-between w-full pt-2 pb-2">
-                   <div className="flex items-center gap-4">
-                                      <Image width={500}
-                                  height={500}
-                                        className="w-[3.5rem] h-[3.5rem] object-contain rounded-full"
-                                        src={course.teacherImg}
-                                        alt={course.teacher}
-                                      />
-                                        <h2 className="text-sm font-semibold sm:text-lg text-primaryText">
-                                          {course.teacher}
-                                        </h2>
-                                    </div>
-                  <div>
                     <h3 className="px-2 py-1 text-sm text-white bg-accent-Default sm:text-lg rounded-3xl">
                       {course.price}
                     </h3>
                   </div>
-                </div>
-              </div>
 
-              {/* زر + فورم */}
+              {/* زر الشراء + الفورم */}
               <Dialog>
                 <DialogTrigger asChild>
                   <Button
@@ -108,7 +140,9 @@ export default function Page() {
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Enroll in {selectedCourse?.title}</DialogTitle>
+                    <DialogTitle>
+                      Enroll in {selectedCourse?.title}
+                    </DialogTitle>
                     <DialogDescription>
                       Fill the form below to complete your request.
                     </DialogDescription>
@@ -154,81 +188,14 @@ export default function Page() {
                       />
                     </div>
                     <DialogFooter>
-                      <Button type="submit">Send Request</Button>
+                      <Button type="submit" disabled={submitting}>
+                        {submitting ? "Sending..." : "Send Request"}
+                      </Button>
                     </DialogFooter>
                   </form>
                 </DialogContent>
               </Dialog>
             </motion.div>
-          ))}
-        </div>
-      </div>
-      <div className="flex flex-col justify-center max-w-7xl px-4 py-10 mx-auto sm:px-6">
-        <motion.h1
-          variants={fadeIn("right", 0.2)}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="mb-6 text-2xl md:text-start text-center font-bold text-accent-Default md:text-3xl dark:text-white"
-        >
-          Paid courses
-        </motion.h1>
-        <motion.p
-          variants={fadeIn("right", 0.3)}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className=" text-center md:text-start text-gray-500"
-        >
-          The school offers a vibrant kids' class, teaching athletics, language,
-          dance, art, drawing, and more, fostering creativity and skills.
-        </motion.p>
-
-        <div className="xl:w-[90%] w-full mx-auto grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 place-items-center justify-center px-4 pt-6">
-          {courses.map((course) => (
-            <Link
-              href={`/courses/${course.id}`}
-              key={course.id}
-              className="flex flex-col hover:bg-white/30 shadow-md transition-all duration-200 ease-in-out w-full max-h-full rounded-lg"
-            >
-              <motion.div
-                variants={fadeIn("up", course.id * 0.2)}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.2 }}
-              >
-                <div className="relative z-10 px-8 pt-6 top-6">
-                  <Image
-                    width={500}
-                    height={500}
-                    className="sm:w-[18rem] sm:h-[18rem] xs:w-[14rem] xs:h-[14rem] w-[8rem] h-[8rem] mx-auto object-cover rounded-full outline outline-[1rem] outline-lightOrange/10 shadow-4xl"
-                    src={course.image}
-                    alt={course.title}
-                  />
-                </div>
-
-                <div className="flex flex-col w-full gap-4 px-6 pb-5 pt-8 rounded-xl bg-lightOrange/10">
-                  <h2 className="mt-8 min-h-[60px] text-xl text-center text-primaryText sm:text-xl font-black">
-                    {course.title}
-                  </h2>
-
-                  <div className="flex items-center justify-between w-full pt-2 pb-2">
-                    <div className="flex items-center gap-4">
-                      <Image
-                        width={500}
-                        height={500}
-                        className="w-[3.5rem] h-[3.5rem] object-contain rounded-full"
-                        src={course.teacherImg}
-                        alt={course.teacher}
-                      />
-                      <h2 className="text-sm font-semibold sm:text-lg text-primaryText">
-                        {course.teacher}
-                      </h2>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </Link>
           ))}
         </div>
       </div>

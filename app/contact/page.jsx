@@ -184,7 +184,7 @@ const Contact = () => {
           </motion.div>
           <motion.div variants={fadeIn("left", 0.2)}
             initial="show"
-            animate="show" className="flex items-center order-1 xl:order-none mb-8 xl:mb-0 xl:justify-end">
+            animate="show" className="flex items-start order-1 xl:order-none mb-8 xl:mb-0 xl:justify-end">
             <ul className="flex flex-col gap-10">
               {info.map((item, index) => {
                 return (

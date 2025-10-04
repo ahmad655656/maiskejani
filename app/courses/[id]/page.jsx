@@ -1,25 +1,54 @@
 "use client";
-import { courses } from "@/app/data";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 const Page = () => {
   const params = useParams();
   const courseId = parseInt(params.id);
-
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const course = courses.find((c) => c.id === courseId);
 
-  if (!course) return <p className="mt-10 text-center">Course not found</p>;
+
+
+  useEffect(() => {
+    async function fetchCourses() {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}api/courses?per_page=6&page=1`,
+          {
+            headers: {
+              Accept: "application/json",
+            },
+          }
+        );
+        const json = await res.json();
+        console.log(json.data?.data);
+        // Laravel عادة بيرجع data داخل data
+        setCourses(Array.isArray(json.data?.data) ? json.data.data : []);
+        console.log(courses);
+      } catch (err) {
+        console.error("Fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchCourses();
+  }, []);
+  if (loading) return <div>جاري التحميل...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="font-['Poppins']">
       {/* قسم تفاصيل الكورس */}
       <section className="flex items-center justify-center bg-black bg-opacity-20 h-[100vh]">
         <div className="flex w-[1300px] p-10 bg-white border-gray-400 rounded-xl border-2">
-          <Image width={100}
-                height={100}
+          <Image
+            width={100}
+            height={100}
             className="w-[556px] ml-3 mr-6"
-            src={course.image}
+            src={course.thumbnail}
             alt={course.title}
           />
           <div>
@@ -28,7 +57,7 @@ const Page = () => {
                 {course.title}
               </h1>
               <span className="text-sm text-[#2C742F] px-2 py-1 bg-[#20B526] bg-opacity-20">
-                {course.academicYear}
+                {course.price}
               </span>
             </div>
             <p className="w-[500px] text-justify text-[#7f7f7f] text-sm font-normal mt-4 leading-[21px]">
@@ -43,7 +72,7 @@ const Page = () => {
         <h2 className="mb-6 text-2xl font-semibold text-primaryText">
           Course Videos
         </h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+       {/*  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {course.videos?.map((video) => (
             <div
               key={video.id}
@@ -64,7 +93,7 @@ const Page = () => {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </section>
     </div>
   );
