@@ -1,116 +1,252 @@
-'use client'
-import React from "react";
-import { motion } from 'framer-motion'
+"use client";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { fadeIn } from "@/variants";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
 const Contact = () => {
+  // ✅ حالة لتخزين إعدادات الموقع القادمة من لوحة التحكم
+  const [settings, setSettings] = useState({
+    phone: "(+963) 937-944-041",
+    email: "maiskejani2222@gmail.com",
+    address:
+      "طرطوس - شارع الثورة - مقابل فندق كليوباترا - دخلة صاج الضيافة - جانب روضة الانوار",
+  });
+
+  const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("");
+
+  // ✅ اجلب الإعدادات من API
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/site-setting`, {
+          cache: "no-store",
+        });
+        if (!res.ok) throw new Error("Failed to fetch site settings");
+
+        const data = await res.json();
+
+        // تأكد من وجود بيانات الهاتف والإيميل والعنوان
+        setSettings({
+          phone: data?.data?.phone || settings.phone,
+          email: data?.data?.email || settings.email,
+          address: data?.data?.address || settings.address,
+        });
+      } catch (error) {
+        console.error("Error fetching site settings:", error);
+      }
+    };
+
+    fetchSettings();
+  }, []); // 👈 يستدعي مرة واحدة عند تحميل الصفحة
+
+  // 📨 معالجة الإدخال في النموذج
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // 📨 إرسال النموذج
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setStatus("");
+
+    try {
+      const form = new FormData();
+      form.append("name", `${formData.firstname} ${formData.lastname}`);
+      form.append("email", formData.email);
+      form.append("phone", formData.phone);
+      form.append("msg", `${formData.service} - ${formData.message}`);
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/contact/send-message`,
+        {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: form,
+        }
+      );
+
+      const result = await response.json();
+      if (response.ok && result.status) {
+        setStatus("✅ Message sent successfully!");
+        setFormData({
+          firstname: "",
+          lastname: "",
+          email: "",
+          phone: "",
+          service: "",
+          message: "",
+        });
+      } else {
+        setStatus("❌ Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      setStatus("❌ An error occurred while sending the message.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 🧭 قائمة المعلومات تُحدَّث ديناميكياً من settings
+  const info = [
+    {
+      icon: <FaPhoneAlt />,
+      title: "Phone",
+      description: settings.phone,
+    },
+    {
+      icon: <FaEnvelope />,
+      title: "Email",
+      description: settings.email,
+    },
+    {
+      icon: <FaMapMarkerAlt />,
+      title: "Address",
+      description: settings.address,
+    },
+  ];
+
   return (
-    <>
-      {/* source https://tailblocks.cc/ */}
-      <section className="relative md:p-20 p-10 text-gray-600 body-font">
-        <motion.h1 variants={fadeIn("left", 0.1)}
-              initial="hidden"
-              whileInView={"show"}
-              viewport={{ once: false, amount: 0.2 }}  className="text-primaryText font-black text-center text-[30px] ">
-          Contact
-        </motion.h1>
-        <div className="container flex flex-wrap md:px-5 px-0 md:py-10 py-0 mx-auto sm:flex-nowrap">
-          <motion.div variants={fadeIn("right", 0.2)}
-              initial="hidden"
-              whileInView={"show"}
-              viewport={{ once: false, amount: 0.2 }}  className="relative flex items-end justify-start p-10 overflow-hidden bg-gray-300 rounded-lg lg:w-2/3 md:w-1/2 sm:mr-10">
-            <iframe
-              width="100%"
-              height="100%"
-              className="absolute inset-0 hidden md:flex"
-              title="map"
-              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6667.462!2d34.781533!3d25.887025!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15217e76b01567ef%3A0xfefb26c1df11c668!2s!5e0!3m2!1sar!2s!4v1722345678901!5m2!1sar!2s"
+    <section className="relative py-10 md:py-20 text-gray-600 body-font">
+      <motion.h1
+        variants={fadeIn("left", 0.1)}
+        initial="hidden"
+        whileInView={"show"}
+        viewport={{ once: false, amount: 0.2 }}
+        className="text-primaryText font-black text-center text-[32px] mb-12"
+      >
+        Contact Us
+      </motion.h1>
+
+      <div className="container flex flex-col xl:flex-row gap-10 mx-auto px-6">
+        {/* 🗺️ Map & Info */}
+        <motion.div
+          variants={fadeIn("right", 0.2)}
+          initial="hidden"
+          whileInView={"show"}
+          viewport={{ once: false, amount: 0.2 }}
+          className="relative flex flex-col items-center justify-start bg-white rounded-xl shadow-md lg:w-1/2 overflow-hidden"
+        >
+          <iframe
+            width="100%"
+            height="350"
+            className="w-full"
+            title="map"
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6667.462!2d34.781533!3d25.887025!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15217e76b01567ef%3A0xfefb26c1df11c668!2s!5e0!3m2!1sar!2s!4v1722345678901!5m2!1sar!2s"
+          />
+          <ul className="flex flex-col gap-8 p-8 w-full">
+            {info.map((item, i) => (
+              <li key={i} className="flex items-center gap-5">
+                <div className="w-[52px] h-[52px] bg-accent-hover text-accent-Default rounded-md flex items-center justify-center">
+                  <div className="text-[24px]">{item.icon}</div>
+                </div>
+                <div>
+                  <p className="text-primaryText font-semibold">{item.title}</p>
+                  <h3 className="text-primaryText/70">{item.description}</h3>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+
+        {/* 📨 Form */}
+        <motion.form
+          onSubmit={handleSubmit}
+          variants={fadeIn("left", 0.2)}
+          initial="hidden"
+          whileInView={"show"}
+          viewport={{ once: false, amount: 0.2 }}
+          className="flex flex-col gap-6 p-8 bg-white rounded-xl shadow-md lg:w-1/2"
+        >
+          <h3 className="text-3xl text-accent-Default font-bold mb-2">
+            Let's Work Together
+          </h3>
+          <p className="text-primaryText/70 mb-4">
+            We would love to hear your feedback or questions.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Input
+              name="firstname"
+              type="text"
+              className="text-primaryText placeholder:text-primaryText"
+              placeholder="First name"
+              value={formData.firstname}
+              onChange={handleChange}
+              required
             />
-            <div className="relative flex flex-wrap py-6 rounded shadow-md bg-primary">
-              <div className="md:px-6 px-3 lg:w-1/2">
-                <h2 className="md:text-xs text-[10px] font-semibold tracking-widest text-primaryText title-font">
-                  ADDRESS
-                </h2>
-                <p className="mt-1 md:text-[17px] text-[9px] text-primaryText/70">
-                  طرطوس - شارع الثورة - مقابل فندق كليوباترا - دخلة صاج الضيافة
-                  - جانب روضة الانوار
-                </p>
-              </div>
-              <div className="md:px-6 px-3 mt-4 lg:w-1/2 lg:mt-0">
-                <h2 className="md:text-xs text-[10px] font-semibold tracking-widest text-primaryText title-font">
-                  EMAIL
-                </h2>
-                <a className="leading-relaxed md:text-[15px] text-[9px] text-red-500">
-                  maiskejani2222@gmail.com
-                </a>
-                <h2 className="md:text-xs text-[10px] font-semibold tracking-widest text-primaryText title-font">
-                  PHONE
-                </h2>
-                <p className="leading-relaxed md:text-[15px] text-[9px] text-primaryText/70">
-                  (+963) 937-944-041
-                </p>
-              </div>
-            </div>
-          </motion.div>
-          <motion.div variants={fadeIn("left", 0.2)}
-              initial="hidden"
-              whileInView={"show"}
-              viewport={{ once: false, amount: 0.2 }}  className="flex flex-col w-full mt-8 lg:w-1/3 md:w-1/2 md:ml-auto md:py-8 md:mt-0">
-            <h2 className="mb-1 text-lg font-medium text-gray-900 title-font">
-              Feedback
-            </h2>
-            <p className="mb-5 leading-relaxed text-gray-600">
-              Post-ironic portland shabby chic echo park, banjo fashion axe
+            <Input
+              name="lastname"
+              type="text"
+              className="text-primaryText placeholder:text-primaryText"
+              placeholder="Last name"
+              value={formData.lastname}
+              onChange={handleChange}
+              required
+            />
+            <Input
+              name="email"
+              type="email"
+              className="text-primaryText placeholder:text-primaryText"
+              placeholder="Email address"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+            <Input
+              name="phone"
+              type="text"
+              className="text-primaryText placeholder:text-primaryText"
+              placeholder="Phone number"
+              value={formData.phone}
+              onChange={handleChange}
+            />
+          </div>
+
+          <Textarea
+            name="message"
+            className="h-[200px] border-none outline-none placeholder:text-primaryText text-primaryText"
+            placeholder="Type your message here..."
+            value={formData.message}
+            onChange={handleChange}
+            required
+          />
+
+          <Button
+            type="submit"
+            className="max-w-40 bg-accent-Default hover:bg-accent-hover text-black hover:text-white"
+            disabled={loading}
+          >
+            {loading ? "Sending..." : "Send Message"}
+          </Button>
+
+          {status && (
+            <p
+              className={`mt-2 text-sm ${
+                status.startsWith("✅") ? "text-green-600" : "text-red-500"
+              }`}
+            >
+              {status}
             </p>
-            <div className="relative mb-4">
-              <label htmlFor="name" className="text-sm leading-7 text-gray-600">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                className="w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-white border border-gray-300 rounded outline-none focus:border-red-500 focus:ring-2 focus:ring-red-200"
-              />
-            </div>
-            <div className="relative mb-4">
-              <label
-                htmlFor="email"
-                className="text-sm leading-7 text-gray-600"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-white border border-gray-300 rounded outline-none focus:border-red-500 focus:ring-2 focus:ring-red-200"
-              />
-            </div>
-            <div className="relative mb-4">
-              <label
-                htmlFor="message"
-                className="text-sm leading-7 text-gray-600"
-              >
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                className="w-full h-32 px-3 py-1 text-base leading-6 text-gray-700 transition-colors duration-200 ease-in-out bg-white border border-gray-300 rounded outline-none resize-none focus:border-red-500 focus:ring-2 focus:ring-red-200"
-              />
-            </div>
-            <button className="px-6 py-2 text-lg transition-all duration-200 ease-in-out border-0 rounded bg-accent-gold text-primaryText/70 focus:outline-none hover:bg-accent-Default/70 hover:text-primaryText">
-              Submit
-            </button>
-            <p className="mt-3 text-xs text-gray-500">
-              Chicharrones blog helvetica normcore iceland tousled brook viral
-              artisan.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-    </>
+          )}
+        </motion.form>
+      </div>
+    </section>
   );
 };
 

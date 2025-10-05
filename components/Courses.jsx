@@ -6,37 +6,79 @@ import { fadeIn } from "@/variants";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Cookie from "cookie-universal";
+import Loading from "@/app/Loading";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
+  const [submittingId, setSubmittingId] = useState(null);
+ useEffect(() => {
+  async function fetchCourses() {
+    try {
+      const cookies = Cookie();
+      const token = cookies.get("student");
 
-  useEffect(() => {
-    async function fetchCourses() {
-      try {
-        const res = await fetch(
-          "https://test.course.start-tech.ae/api/courses?per_page=6&page=1",
-          {
-            headers: {
-              Accept: "application/json",
-            },
-          }
-        );
-        const json = await res.json();
-        setCourses(Array.isArray(json.data?.data) ? json.data.data : []);
-      } catch (err) {
-        console.error("Fetch error:", err);
-      } finally {
+      // 🟢 1. جلب جميع الكورسات
+      const res = await fetch(
+        "https://test.course.start-tech.ae/api/courses?per_page=6&page=1",
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+
+      const json = await res.json();
+      const allCourses = Array.isArray(json.data?.data) ? json.data.data : [];
+
+      // إذا لم يكن المستخدم مسجل الدخول، اعرض كل الكورسات (اختياري)
+      if (!token) {
+        setCourses(allCourses);
         setLoading(false);
+        return;
       }
-    }
-    fetchCourses();
-  }, []);
 
-  // 🆕 زر الدفع
+      // 🟡 2. جلب الكورسات التي اشتراها المستخدم
+      const myCoursesRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}api/myCourses?status=paid`,
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const myCoursesJson = await myCoursesRes.json();
+
+      // تأكد أن البيانات موجودة ومصفوفة
+      const myCourses = Array.isArray(myCoursesJson.data)
+        ? myCoursesJson.data
+        : [];
+
+      // 🟠 3. استخراج معرفات الكورسات المشتراة
+      const purchasedCourseIds = myCourses.map((c) => c.id);
+
+      // 🔴 4. فلترة الكورسات العامة واستبعاد المشتراة
+      const notPurchasedCourses = allCourses.filter(
+        (course) => !purchasedCourseIds.includes(course.id)
+      );
+
+      // ✅ 5. تحديث الحالة لعرض فقط الكورسات غير المشتراة
+      setCourses(notPurchasedCourses);
+    } catch (err) {
+      console.error("❌ Fetch error:", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  fetchCourses();
+}, []);
+
+
   async function handlePay(courseId) {
-    setSubmitting(true);
+    setSubmittingId(courseId);
     try {
       const cookies = Cookie();
       const token = cookies.get("student");
@@ -49,32 +91,30 @@ const Courses = () => {
       const formData = new FormData();
       formData.append("course_id", courseId);
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}api/pay-now`,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        }
-      );
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/pay-now`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
 
       if (!res.ok) throw new Error("فشل إرسال طلب الدفع");
 
       const data = await res.json();
+      console.log(data);
       alert("✅ تم إرسال طلب الدفع بنجاح!");
       console.log("Response:", data);
     } catch (err) {
       console.error(err);
       alert("❌ حدث خطأ أثناء الدفع");
     } finally {
-      setSubmitting(false);
+      setSubmittingId(null);
     }
   }
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading content={"⏳ Loading Courses..."} />;
 
   return (
     <div className="flex flex-col items-center gap-5 md:p-20 p-10 bg-white">
@@ -119,13 +159,12 @@ const Courses = () => {
               </h3>
             </div>
 
-            {/* زر الدفع */}
             <Button
               onClick={() => handlePay(course.id)}
               className="mt-4 w-full"
-              disabled={submitting}
+              disabled={submittingId === course.id}
             >
-              {submitting ? "Processing..." : "Buy now"}
+              {submittingId === course.id ? "Processing..." : "Buy now"}
             </Button>
           </motion.div>
         ))}

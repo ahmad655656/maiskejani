@@ -10,6 +10,7 @@ import { usePathname } from "next/navigation";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [logo, setLogo] = useState("/asset/Primary_logo.png"); // 👈 الافتراضي
   const pathname = usePathname();
 
   useEffect(() => {
@@ -17,6 +18,31 @@ const Header = () => {
     const token = cookies.get("student");
     setIsLoggedIn(!!token);
   }, [pathname]);
+
+  // ✅ اجلب إعدادات الموقع
+  useEffect(() => {
+    const fetchSiteSettings = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/site-setting`, {
+          cache: "no-store", // 👈 يمنع التخزين المؤقت
+          headers: {
+            Accept: "application/json",
+          },
+        });
+        if (!res.ok) throw new Error("Failed to fetch site settings");
+        const data = await res.json();
+console.log(data)
+        // تأكد من وجود مسار اللوغو
+        if (data?.data?.logo) {
+          setLogo(`${data.data.logo}`);
+        }
+      } catch (error) {
+        console.error("Error loading site settings:", error);
+      }
+    };
+
+    fetchSiteSettings();
+  }, []);
 
   const handleLogout = async () => {
     const cookies = Cookie();
@@ -28,7 +54,7 @@ const Header = () => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // 👈 تمرير التوكن
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -40,7 +66,7 @@ const Header = () => {
     } finally {
       cookies.remove("student");
       setIsLoggedIn(false);
-      window.location.href = "/login"; // 👈 يرجعه لصفحة تسجيل الدخول
+      window.location.href = "/login";
     }
   };
 
@@ -53,8 +79,9 @@ const Header = () => {
             alt="logo"
             width={200}
             height={20}
-            className="max-w-[70%] max-h-[65px]"
-            src="/asset/Primary_logo.png"
+            className="max-w-[70%] max-h-[65px] object-contain"
+            src={logo}
+            priority
           />
         </Link>
 
@@ -62,7 +89,6 @@ const Header = () => {
         <div className="items-center hidden gap-8 xl:flex">
           <Nav />
 
-          {/* زر login/logout */}
           {!isLoggedIn ? (
             <Link href="/login">
               <Button className="bg-accent-gold text-primaryText/70">

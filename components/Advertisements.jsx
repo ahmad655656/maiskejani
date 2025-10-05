@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { motion } from 'framer-motion'
 import { fadeIn } from "@/variants";
+import Loading from "@/app/Loading";
 
 const Advertisements = () => {
     const [ads, setAds] = useState([]); // تخزين الإعلانات في حالة
@@ -35,7 +36,7 @@ const Advertisements = () => {
       fetchAds();
     }, []);
   
-    if (loading) return <div>جاري التحميل...</div>;
+    if (loading) return <Loading content={"⏳ Loading Advertisements..."} />;
     if (error) return <div>{error}</div>;
   
   

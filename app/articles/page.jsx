@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import Loading from "../Loading";
 const Page = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -39,7 +40,7 @@ const Page = () => {
     fetchArticles();
   }, []);
 
-  if (loading) return <p className="text-center py-10">Loading articles...</p>;
+  if (loading) return <Loading content={"⏳ Loading Articles..."} />
 
   return (
     <div className="min-h-screen w-full">

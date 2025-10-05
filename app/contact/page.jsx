@@ -13,23 +13,22 @@ import {
   SelectGroup,
 } from "@/components/ui/select";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
-import emailjs from "emailjs-com"; // استيراد مكتبة EmailJS
 
 const info = [
   {
     icon: <FaPhoneAlt />,
     title: "Phone",
-    description: "(+963) 983 796 029",
+    description: "(+963) 937-944-041",
   },
   {
     icon: <FaEnvelope />,
     title: "Email",
-    description: "haedarahasan69@gmail.com",
+    description: "maiskejani2222@gmail.com",
   },
   {
     icon: <FaMapMarkerAlt />,
     title: "Address",
-    description: "Syria, Tartous, AlSheikh-Badr",
+    description: "طرطوس - شارع الثورة - مقابل فندق كليوباترا - دخلة صاج الضيافة - جانب روضة الانوار",
   },
 ];
 
@@ -51,30 +50,29 @@ const Contact = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    emailjs
-      .send(
-        "service_a0qqwbf",
-        "template_jiml93v",
+    try {
+      const form = new FormData();
+      form.append("name", `${formData.firstname} ${formData.lastname}`);
+      form.append("email", formData.email);
+      form.append("phone", formData.phone);
+      form.append("msg", `${formData.service} - ${formData.message}`);
+
+      const response = await fetch(
+        "https://test.course.start-tech.ae/api/contact/send-message",
         {
-          from_name: `${formData.firstname} ${formData.lastname}`,
-          to_name: "Ahmad Salloum",
-          from_email: formData.email,
-          phone: formData.phone,
-          service: formData.service,
-          message: formData.message,
-          to_email: "haedarahasan69@gmail.com",
-        },
-        "GMi_Grh4yynlwtzVU"
-      )
-      .then((response) => {
-        console.log(
-          "Message sent successfully!",
-          response.status,
-          response.text
-        );
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+          },
+          body: form,
+        }
+      );
+
+      if (response.ok) {
+        console.log("✅ Message sent successfully!");
         setFormData({
           firstname: "",
           lastname: "",
@@ -83,21 +81,24 @@ const Contact = () => {
           service: "",
           message: "",
         });
-      })
-      .catch((err) => {
-        console.error("Failed to send message. Error:", err);
-      });
+      } else {
+        console.error("❌ Failed to send message:", await response.json());
+      }
+    } catch (err) {
+      console.error("❌ Error:", err);
+    }
   };
 
   return (
-    <section
-      className="py-6"
-    >
+    <section className="py-6">
       <div className="container mx-auto">
         <div className="flex flex-col xl:flex-row gap-[30px]">
-          <motion.div variants={fadeIn("right", 0.2)}
+          <motion.div
+            variants={fadeIn("right", 0.2)}
             initial="show"
-            animate="show"className="xl:h-[54%] order-2 xl:order-none">
+            animate="show"
+            className="xl:h-[54%] order-2 xl:order-none"
+          >
             <form
               method="POST"
               className="flex flex-col gap-6 p-10 bg-white rounded-xl"
@@ -113,6 +114,7 @@ const Contact = () => {
                   type="text"
                   className="placeholder:text-primaryText"
                   placeholder="Firstname"
+                  value={formData.firstname}
                   onChange={handleChange}
                 />
                 <Input
@@ -120,6 +122,7 @@ const Contact = () => {
                   type="text"
                   className="placeholder:text-primaryText"
                   placeholder="Lastname"
+                  value={formData.lastname}
                   onChange={handleChange}
                 />
                 <Input
@@ -127,6 +130,7 @@ const Contact = () => {
                   type="email"
                   className="placeholder:text-primaryText"
                   placeholder="Email address"
+                  value={formData.email}
                   onChange={handleChange}
                 />
                 <Input
@@ -134,6 +138,7 @@ const Contact = () => {
                   type="text"
                   placeholder="Phone number"
                   className="placeholder:text-primaryText"
+                  value={formData.phone}
                   onChange={handleChange}
                 />
               </div>
@@ -141,29 +146,23 @@ const Contact = () => {
                 onValueChange={(value) =>
                   setFormData({ ...formData, service: value })
                 }
-                className="w-full placeholder:text-primaryText"
               >
                 <SelectTrigger className="w-full placeholder:text-primaryText">
-                  <SelectValue
-                    placeholder="Select a service"
-                    className={`${
-                      formData.service ? "text-primaryText" : "text-primaryText"
-                    }`}
-                  />
+                  <SelectValue placeholder="Select a service" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel className="text-primaryText">
                       Select a service
                     </SelectLabel>
-                    <SelectItem className="text-primaryText" value="Front-End Development">
+                    <SelectItem value="Front-End Development">
                       Front-End Development
                     </SelectItem>
-                    <SelectItem className="text-primaryText" value="Correcting Code Errors">
+                    <SelectItem value="Correcting Code Errors">
                       Correcting Code Errors
                     </SelectItem>
-                    <SelectItem className="text-primaryText" value="Logo Design">Logo Design</SelectItem>
-                    <SelectItem className="text-primaryText" value="Video Design">Video Design</SelectItem>
+                    <SelectItem value="Logo Design">Logo Design</SelectItem>
+                    <SelectItem value="Video Design">Video Design</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -172,6 +171,7 @@ const Contact = () => {
                 name="message"
                 className="h-[200px] placeholder:text-primaryText"
                 placeholder="Type your message here"
+                value={formData.message}
                 onChange={handleChange}
               />
               <Button
@@ -182,9 +182,12 @@ const Contact = () => {
               </Button>
             </form>
           </motion.div>
-          <motion.div variants={fadeIn("left", 0.2)}
+          <motion.div
+            variants={fadeIn("left", 0.2)}
             initial="show"
-            animate="show" className="flex items-start order-1 xl:order-none mb-8 xl:mb-0 xl:justify-end">
+            animate="show"
+            className="flex items-start order-1 xl:order-none mb-8 xl:mb-0 xl:justify-end"
+          >
             <ul className="flex flex-col gap-10">
               {info.map((item, index) => {
                 return (
