@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,82 +13,123 @@ import {
   SelectGroup,
 } from "@/components/ui/select";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
-
-const info = [
-  {
-    icon: <FaPhoneAlt />,
-    title: "Phone",
-    description: "(+963) 937-944-041",
-  },
-  {
-    icon: <FaEnvelope />,
-    title: "Email",
-    description: "maiskejani2222@gmail.com",
-  },
-  {
-    icon: <FaMapMarkerAlt />,
-    title: "Address",
-    description: "طرطوس - شارع الثورة - مقابل فندق كليوباترا - دخلة صاج الضيافة - جانب روضة الانوار",
-  },
-];
-
 import { motion } from "framer-motion";
 import { fadeIn } from "@/variants";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    phone: "",
-    service: "",
-    message: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const form = new FormData();
-      form.append("name", `${formData.firstname} ${formData.lastname}`);
-      form.append("email", formData.email);
-      form.append("phone", formData.phone);
-      form.append("msg", `${formData.service} - ${formData.message}`);
-
-      const response = await fetch(
-        "https://test.course.start-tech.ae/api/contact/send-message",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-          },
-          body: form,
+   // ✅ حالة لتخزين إعدادات الموقع القادمة من لوحة التحكم
+    const [settings, setSettings] = useState({
+      phone: "(+963) 937-944-041",
+      email: "maiskejani2222@gmail.com",
+      address:
+        "طرطوس - شارع الثورة - مقابل فندق كليوباترا - دخلة صاج الضيافة - جانب روضة الانوار",
+    });
+  
+    const [formData, setFormData] = useState({
+      firstname: "",
+      lastname: "",
+      email: "",
+      phone: "",
+      service: "",
+      message: "",
+    });
+    const [loading, setLoading] = useState(false);
+    const [status, setStatus] = useState("");
+  
+    // ✅ اجلب الإعدادات من API
+    useEffect(() => {
+      const fetchSettings = async () => {
+        try {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/site-setting`, {
+            cache: "no-store",
+          });
+          if (!res.ok) throw new Error("Failed to fetch site settings");
+  
+          const data = await res.json();
+  
+          // تأكد من وجود بيانات الهاتف والإيميل والعنوان
+          setSettings({
+            phone: data?.data?.phone || settings.phone,
+            email: data?.data?.email || settings.email,
+            address: data?.data?.address || settings.address,
+          });
+        } catch (error) {
+          console.error("Error fetching site settings:", error);
         }
-      );
-
-      if (response.ok) {
-        console.log("✅ Message sent successfully!");
-        setFormData({
-          firstname: "",
-          lastname: "",
-          email: "",
-          phone: "",
-          service: "",
-          message: "",
-        });
-      } else {
-        console.error("❌ Failed to send message:", await response.json());
+      };
+  
+      fetchSettings();
+    }, []); // 👈 يستدعي مرة واحدة عند تحميل الصفحة
+  
+    // 📨 معالجة الإدخال في النموذج
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+    };
+  
+    // 📨 إرسال النموذج
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+      setStatus("");
+  
+      try {
+        const form = new FormData();
+        form.append("name", `${formData.firstname} ${formData.lastname}`);
+        form.append("email", formData.email);
+        form.append("phone", formData.phone);
+        form.append("msg", `${formData.service} - ${formData.message}`);
+  
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/contact/send-message`,
+          {
+            method: "POST",
+            headers: { Accept: "application/json" },
+            body: form,
+          }
+        );
+  
+        const result = await response.json();
+        if (response.ok && result.status) {
+          setStatus("✅ Message sent successfully!");
+          setFormData({
+            firstname: "",
+            lastname: "",
+            email: "",
+            phone: "",
+            service: "",
+            message: "",
+          });
+        } else {
+          setStatus("❌ Failed to send message. Please try again.");
+        }
+      } catch (error) {
+        console.error(error);
+        setStatus("❌ An error occurred while sending the message.");
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error("❌ Error:", err);
-    }
-  };
-
+    };
+  
+    // 🧭 قائمة المعلومات تُحدَّث ديناميكياً من settings
+    const info = [
+      {
+        icon: <FaPhoneAlt />,
+        title: "Phone",
+        description: settings.phone,
+      },
+      {
+        icon: <FaEnvelope />,
+        title: "Email",
+        description: settings.email,
+      },
+      {
+        icon: <FaMapMarkerAlt />,
+        title: "Address",
+        description: settings.address,
+      },
+    ];
+  
   return (
     <section className="py-6">
       <div className="container mx-auto">
@@ -107,7 +148,7 @@ const Contact = () => {
               <h3 className="text-4xl text-accent-Default">
                 Let's work together
               </h3>
-              <p className="text-primaryText/60">Haedara Hasan Salloum</p>
+              <p className="text-primaryText/60">Eng.Mais Kejani</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Input
                   name="firstname"
