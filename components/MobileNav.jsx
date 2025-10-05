@@ -8,6 +8,7 @@ import Image from "next/image";
 import { navLinks } from "@/app/data";
 import Cookie from "cookie-universal";
 import { Button } from "./ui/button";
+import { FaBookOpen } from "react-icons/fa";
 
 const MobileNav = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -29,7 +30,7 @@ const MobileNav = () => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -41,7 +42,7 @@ const MobileNav = () => {
     } finally {
       cookies.remove("student");
       setIsLoggedIn(false);
-      window.location.href = "/login"; 
+      window.location.href = "/login";
     }
   };
 
@@ -62,7 +63,7 @@ const MobileNav = () => {
             />
           </Link>
         </div>
-        <nav className="flex flex-col items-center justify-center gap-8">
+        <nav className="flex flex-col items-center justify-center gap-4">
           {navLinks.map((link, index) => {
             return (
               <Link
@@ -86,12 +87,17 @@ const MobileNav = () => {
             </Button>
           </Link>
         ) : (
-          <Button
-            onClick={handleLogout}
-            className="bg-red-500 max-w-[200px] text-white hover:bg-red-600"
-          >
-            Logout
-          </Button>
+          <div className="flex flex-col items-center gap-5">
+            <Button
+              onClick={handleLogout}
+              className="bg-red-500 text-white hover:bg-red-600"
+            >
+              Logout
+            </Button>
+            <Link href={"/myCourses"}>
+              <FaBookOpen className="text-primaryText text-[40px] transition-all duration-500 hover:rotate-12 hover:text-accent-Default hover:drop-shadow-[0_0_10px_#ff6b00]" />
+            </Link>
+          </div>
         )}
       </SheetContent>
     </Sheet>

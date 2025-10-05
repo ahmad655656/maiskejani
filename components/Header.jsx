@@ -7,6 +7,7 @@ import MobileNav from "./MobileNav";
 import Image from "next/image";
 import Cookie from "cookie-universal";
 import { usePathname } from "next/navigation";
+import { FaBookOpen } from "react-icons/fa";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -96,12 +97,17 @@ console.log(data)
               </Button>
             </Link>
           ) : (
-            <Button
+            <div className="flex flex-row items-center gap-5">
+              <Button
               onClick={handleLogout}
               className="bg-red-500 text-white hover:bg-red-600"
             >
               Logout
             </Button>
+                      <Link href={"/myCourses"}>
+              <FaBookOpen className="text-primaryText text-[40px] transition-all duration-500 hover:rotate-12 hover:text-accent-Default hover:drop-shadow-[0_0_10px_#ff6b00]" />
+            </Link>
+            </div>
           )}
         </div>
 

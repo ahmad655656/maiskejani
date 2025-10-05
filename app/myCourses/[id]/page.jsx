@@ -173,7 +173,7 @@ const Page = () => {
                 onClick={() => handleLessonClick(lesson.id)}
                 className={`p-4 bg-white border rounded-lg shadow-sm hover:bg-gray-100 cursor-pointer transition ${
                   selectedLesson?.id === lesson.id
-                    ? "border-blue-500 bg-blue-50"
+                    ? "border-accent-Default bg-blue-50"
                     : ""
                 }`}
               >

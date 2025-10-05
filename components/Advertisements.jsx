@@ -58,7 +58,7 @@ const Advertisements = () => {
         <ul className="flex md:flex-row md:flex-wrap flex-col gap-6 mt-16 items-center justify-center text-center text-slate-700">
           {ads.slice(0, 3).map((ad,index) => {
             return (
-             <Link href={`/advertisements/${ad.id}`}>
+             <Link href={`/advertisements/${ad.id}`} key={ad.id}>
               <motion.li variants={fadeIn("top", index/3)}
               initial="hidden"
               whileInView={"show"}

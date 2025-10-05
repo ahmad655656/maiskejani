@@ -96,7 +96,7 @@ export default function MyCourses() {
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {courses.map((course) => (
-            status === "paid" ? (             <Link href={`/myCourses/${course.id}`}>
+            status === "paid" ? (             <Link href={`/myCourses/${course.id}`} key={course.id}>
             <motion.div
             variants={fadeIn("up", course.id * 0.2)}
             initial="hidden"
