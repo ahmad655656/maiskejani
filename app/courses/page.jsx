@@ -14,79 +14,74 @@ const Courses = () => {
   const [submittingId, setSubmittingId] = useState(null);
 const[clicked, setClicked] = useState(false)
   useEffect(() => {
-    async function fetchCourses() {
-      try {
-        const cookies = Cookie();
-        const token = cookies.get("student");
+  async function fetchCourses() {
+    setLoading(true);
+    try {
+      const cookies = Cookie();
+      const token = cookies.get("student");
 
-        // 🟢 1. جلب جميع الكورسات
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}api/courses?per_page=6&page=1`,
-          {
-            headers: {
-              Accept: "application/json",
-            },
-          }
-        );
+      // 🟢 جلب جميع الكورسات
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}api/courses?per_page=6&page=1`,
+        { headers: { Accept: "application/json" } }
+      );
 
-        const json = await res.json();
-        const allCourses = Array.isArray(json.data?.data) ? json.data.data : [];
+      const json = await res.json();
+      const allCourses = Array.isArray(json.data?.data) ? json.data.data : [];
 
-        // إذا لم يكن المستخدم مسجل الدخول
-        if (!token) {
-          setCourses(allCourses);
-          setLoading(false);
-          return;
-        }
-
-        // 🟡 2. جلب الكورسات التي اشتراها (paid)
-        const paidRes = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}api/myCourses?status=paid`,
-          {
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const paidJson = await paidRes.json();
-        const paidCourses = Array.isArray(paidJson.data)
-          ? paidJson.data.map((c) => c.id)
-          : [];
-
-        // 🟠 3. جلب الكورسات المعلقة (pending)
-        const pendingRes = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}api/myCourses?status=pending`,
-          {
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const pendingJson = await pendingRes.json();
-        const pendingCourses = Array.isArray(pendingJson.data)
-          ? pendingJson.data.map((c) => c.id)
-          : [];
-
-        // 🔴 4. دمج المشتراة والمعلقة في مصفوفة واحدة
-        const excludedCourseIds = [...paidCourses, ...pendingCourses];
-
-        // 🟢 5. استبعاد الكورسات المشتراة أو المعلقة
-        const availableCourses = allCourses.filter(
-          (course) => !excludedCourseIds.includes(course.id)
-        );
-
-        setCourses(availableCourses);
-      } catch (err) {
-        console.error("❌ Fetch error:", err);
-      } finally {
-        setLoading(false);
+      // ✅ إذا لم يوجد توكن → عرض جميع الكورسات فوراً
+      if (!token) {
+        setCourses(allCourses);
+        return;
       }
-    }
 
-    fetchCourses();
-  }, [clicked]);
+      // 🟡 جلب الكورسات التي اشتراها المستخدم
+      const paidRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}api/myCourses?status=paid`,
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const paidJson = await paidRes.json();
+      const paidCourses = Array.isArray(paidJson.data)
+        ? paidJson.data.map((c) => c.id)
+        : [];
+
+      // 🟠 جلب الكورسات المعلقة
+      const pendingRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}api/myCourses?status=pending`,
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const pendingJson = await pendingRes.json();
+      const pendingCourses = Array.isArray(pendingJson.data)
+        ? pendingJson.data.map((c) => c.id)
+        : [];
+
+      // 🔴 استبعاد الكورسات المشتراة أو المعلقة
+      const excludedCourseIds = [...paidCourses, ...pendingCourses];
+      const availableCourses = allCourses.filter(
+        (course) => !excludedCourseIds.includes(course.id)
+      );
+
+      setCourses(availableCourses);
+    } catch (err) {
+      console.error("❌ Fetch error:", err);
+      setCourses([]); // لتجنب بقاء الحالة فارغة غير محددة
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  fetchCourses();
+}, [clicked]);
 
   async function handlePay(courseId) {
     setClicked(true)
