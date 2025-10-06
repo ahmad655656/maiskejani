@@ -30,7 +30,7 @@ const AboutMe = () => {
               initial="hidden"
               whileInView={"show"}
               viewport={{ once: false, amount: 0.2 }} className="flex flex-col items-center justify-center gap-3 text-primaryText">
-          <h1 className="text-[20px] text-accent-Default ">Mrs. Miss Kijani</h1>
+          <h1 className="text-[20px] text-accent-Default ">Mrs. Mais Kijani</h1>
           <p className="text-center md:w-[500px] w-[300px] line-clamp-4 ">
             I am an Architectural Engineer with experience in design, shop drawings, and construction. I have worked with Abco Company, Porto Tartous, and as a university instructor at Tartous University. In addition to my role as a freelancer, I am skilled in using AutoCAD, Revit, 3ds Max, V-Ray, Photoshop, SketchUp, and Lumion/Enscape, combining creativity with technical accuracy in architectural projects.
           </p>
