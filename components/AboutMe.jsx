@@ -20,7 +20,7 @@ const AboutMe = () => {
               whileInView={"show"}
               viewport={{ once: false, amount: 0.2 }} className="flex flex-col items-center justify-center gap-7 ">
         <Image
-          src="/asset/Engineer Mais Kejani.png"
+          src="/asset/edited-photo.png"
           alt=""
           className="sm:w-[20rem] sm:h-[20rem] xs:w-[14rem] xs:h-[14rem] w-[15rem] h-[15rem] rounded-[50%] object-contain"
           width={400}
