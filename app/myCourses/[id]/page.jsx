@@ -207,7 +207,7 @@ const Page = () => {
                 href={selectedLesson.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-accent-gold text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition"
+                className="bg-accent-gold text-primaryText px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition"
               >
                 Download/View file
               </a>

@@ -45,7 +45,7 @@ const Hero = () => {
             className="mt-3 mb-6 h1"
           >
             Hello I'm <br />
-            <span className="text-accent-Default">Eng.Mais Kejani</span>
+            <span className="text-accent-Default">Eng.Miss Kijani</span>
           </motion.h1>
 
           {/* typewriter paragraph */}

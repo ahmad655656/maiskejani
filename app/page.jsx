@@ -12,6 +12,7 @@ import { motion } from 'framer-motion'
 import { fadeIn } from "@/variants";
 import Footer from "@/components/Footer";
 import Advertisements from "@/components/Advertisements";
+import WelcomeVideo from "@/components/WelcomeVideo";
 
 export default function Home() {
   const [showDown, setShowDown] = useState(false);
@@ -45,6 +46,7 @@ export default function Home() {
 
   return (
     <section className="relative h-full overflow-x-hidden">
+      <WelcomeVideo />
       {/* Hero Section */}
       <Hero />
 

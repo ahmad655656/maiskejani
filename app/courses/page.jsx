@@ -156,7 +156,6 @@ const[clicked, setClicked] = useState(false)
                   alt={course.title}
                 />
               </div>
-
               <div className="flex items-center justify-between w-full gap-4 px-6 pt-10 rounded-xl bg-lightOrange/10">
                 <h2 className="mt-8 min-h-[60px] text-sm text-center text-primaryText sm:text-sm font-black">
                   {course.title}
