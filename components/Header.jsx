@@ -32,7 +32,6 @@ const Header = () => {
         });
         if (!res.ok) throw new Error("Failed to fetch site settings");
         const data = await res.json();
-console.log(data)
         // تأكد من وجود مسار اللوغو
         if (data?.data?.logo) {
           setLogo(`${data.data.logo}`);

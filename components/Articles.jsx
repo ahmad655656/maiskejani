@@ -24,7 +24,6 @@ const [articles, setArticles] = useState([]);
         const json = await res.json();
         // Laravel غالباً بيرجع { data: { data: [...] } }
         setArticles(Array.isArray(json.data?.data) ? json.data.data : []);
-        console.log(json.data?.data);
       } catch (err) {
         console.error("Error fetching articles:", err);
       } finally {

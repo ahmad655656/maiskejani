@@ -68,7 +68,7 @@ export default function Home() {
               whileInView={"show"}
               viewport={{ once: false, amount: 0.2 }} 
           onClick={scrollToBottom}
-          className="fixed bottom-5 right-[100px] z-50 bg-primaryText text-white p-3 rounded-full shadow-lg hover:bg-opacity-80 transition"
+          className="fixed bottom-5 right-[20px] md:right-[100px] z-50 bg-primaryText text-white p-3 rounded-full shadow-lg hover:bg-opacity-80 transition"
         >
           <FaArrowDown className="w-5 h-5" />
         </motion.button>

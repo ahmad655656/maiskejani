@@ -24,7 +24,6 @@ const Advertisements = () => {
             }
           );
           const data = await response.json();
-          console.log(data.data?.data)
           setAds(data.data?.data); // نفترض أن البيانات موجودة في data.data
         } catch (err) {
           setError("فشل في تحميل الإعلانات.");
